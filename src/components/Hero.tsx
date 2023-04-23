@@ -1,17 +1,24 @@
-import { Flex, Heading } from '@chakra-ui/react'
+import { Flex, Heading, Text, Stack } from '@chakra-ui/react'
 
-export const Hero = ({ title }: { title: string }) => (
+type Props = {
+  module: React.ReactNode,
+  title: string
+}
+
+export const Hero = ({ title, module }: Props) => (
   <Flex
     justifyContent="center"
-    alignItems="center"
-    height="100vh"
+    alignItems="start"
     bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
     bgClip="text"
   >
-    <Heading fontSize="6vw">{title}</Heading>
+    <Stack textAlign="center" paddingBlockStart="1vh">
+      <Heading fontSize="1vw">{module}</Heading>
+      <Heading fontSize="6vw">{title}</Heading>
+    </Stack>
   </Flex>
 )
 
 Hero.defaultProps = {
-  title: 'with-chakra-ui-typescript',
+  title: "Economics",
 }
