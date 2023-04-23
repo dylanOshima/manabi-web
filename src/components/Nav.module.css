@@ -1,0 +1,79 @@
+.wrapper {
+  width: 20vw;
+  position: absolute;
+  background-color: #d2d2d2;
+  height: 100%;
+  left: 0;
+}
+
+.wrapperClosing {
+  left: -20vw;
+  display: none;
+  animation: 0.25s 1 alternate slideIn;
+}
+.wrapperOpening {
+  animation: 0.25s 1 alternate slideOut;
+}
+
+@keyframes slideOut {
+  from {
+    left: -20vw;
+  }
+  to {
+    left: 0;
+    background-color: yellow;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: -20vw;
+    background-color: green;
+  }
+  100% {
+    display: none;
+  }
+}
+
+.item {
+  background-color: blue;
+}
+
+.item:hover {
+  background-color: red;
+}
+
+.drawerButton {
+  /* positioning */
+  top: 50vh;
+  position: absolute;
+  /* style */
+  background-color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+}
+
+.drawerButton:hover {
+  /* style */
+  background-color: whitesmoke;
+}
+
+.drawerButtonOpen {
+  composes: drawerButton;
+  /* positioning */
+  left: 19vw;
+  top: 50vh;
+}
+
+.drawerButtonClosed {
+  composes: drawerButton;
+  /* positioning */
+  left: 0;
+  /* style */
+  width: 32px;
+  height: 32px;
+}
