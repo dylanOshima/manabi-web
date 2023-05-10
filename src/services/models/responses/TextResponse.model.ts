@@ -22,15 +22,4 @@ export default class TextResponseModel extends ResponseModel<string> {
     );
   }
 
-  public parse(raw: string): TResponseEvaluation {
-    // TODO: Write proper response parsing
-    const fakeEvaluation = {
-      raw,
-      score: 0.7,
-      feedback: ["Next time use more words.", "Could have used an excalmation point there!"]
-    };
-    this.data.evaluation = fakeEvaluation;
-    return fakeEvaluation;
-  }
-
 }

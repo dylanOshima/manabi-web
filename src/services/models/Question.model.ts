@@ -1,5 +1,8 @@
 import type { ID } from "../CoreTypes";
+import { sendPromptToOpenAI } from "../openai/openai";
+import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
 import ModelBase from "./ModelBase";
+import TextResponseModel from "./responses/TextResponse.model";
 
 /**
  * Question model.
@@ -30,6 +33,22 @@ export default class QuestionModel extends ModelBase {
       "This is a test question?",
       [], // response IDs
     );
+  }
+
+  /**
+   * Update the evaluation with an answer
+   * @param answer the provided answer to this question
+   */
+  public async genAnswer(
+    answer: TextResponseModel,
+  ): Promise<TextResponseModel> {
+    const prompt = genAnswerFeedbackPrompt(this.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
+    const resp = await sendPromptToOpenAI(prompt);
+    // Get the first response choice
+    const feedback = resp.data.choices[0].text;
+    const parsedResponse = answer.parse(feedback);
+    answer.data.evaluation = parsedResponse;
+    return answer;
   }
 
 }

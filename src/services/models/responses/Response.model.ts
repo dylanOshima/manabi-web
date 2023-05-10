@@ -11,7 +11,7 @@ export type TResponse<TInput, TEvaluation> = {
 export type TResponseEvaluation = {
   // Raw response from GPT evaluation
   raw: string
-  // score of correctness (range from 0 to 1)
+  // score of correctness (range from 0 to 1 where 1 is most correct and 0 is nothing correct)
   score: number,
   // Feedback items from GPT
   feedback: string[],
@@ -36,6 +36,13 @@ export default abstract class ResponseModel<TInput> extends ModelBase {
    * Parses the raw string response from the ML model into evaluation type.
    * @param output output from the ML model as a single string
    */
-  public abstract parse(evaluation: string): TResponseEvaluation;
+  public parse(raw: string): TResponseEvaluation {
+    // TODO: Write proper response parsing
+    return {
+      raw,
+      score: 0.7,
+      feedback: ["Next time use more words.", "Could have used an excalmation point there!"]
+    };
+  }
 
 }
