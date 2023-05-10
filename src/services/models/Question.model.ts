@@ -1,4 +1,5 @@
 import type { ID } from "../CoreTypes";
+import BasicLogger from "../loggers/BasicLogger";
 import { sendPromptToOpenAI } from "../openai/openai";
 import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
 import ModelBase from "./ModelBase";
@@ -43,12 +44,17 @@ export default class QuestionModel extends ModelBase {
     answer: TextResponseModel,
   ): Promise<TextResponseModel> {
     const prompt = genAnswerFeedbackPrompt(this.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
-    const resp = await sendPromptToOpenAI(prompt);
-    // Get the first response choice
-    const feedback = resp.data.choices[0].text;
-    const parsedResponse = answer.parse(feedback);
-    answer.data.evaluation = parsedResponse;
-    return answer;
+    try {
+      const resp = await sendPromptToOpenAI(prompt);
+      // Get the first response choice
+      const feedback = resp.data.choices[0].text;
+      const parsedResponse = answer.parse(feedback);
+      answer.data.evaluation = parsedResponse;
+      return answer;
+    } catch (error) {
+      (new BasicLogger()).setError(error).log();
+      throw error;
+    }
   }
 
 }
