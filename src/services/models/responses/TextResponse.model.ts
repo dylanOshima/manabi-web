@@ -1,5 +1,5 @@
 import type { ID } from "../../CoreTypes";
-import ResponseModel, { TResponseEvaluation } from "./Response.model";
+import ResponseModel from "./Response.model";
 
 /**
  * Text response instance model.
