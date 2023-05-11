@@ -2,6 +2,7 @@ import { Flex, Textarea, FormErrorMessage } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { Container } from './Container'
+import { longFormAnswerValidationFetch } from '@/services/question-answering/question-answering.fetch';
 
 
 export default function UserInput() {
@@ -13,15 +14,10 @@ export default function UserInput() {
   );
 
   const fetcher = useCallback(
-    (input: string) => fetch("/api/answer")
-      .then(resp => {
-        if (resp.status === 200) {
-          return resp.json();
-        }
-        setErrorMessage("Request failed with an error");
-        if (process.env.NODE_ENV === "development") console.error(resp);
-      })
-      .then(data => console.log(data))
+    (answer: string) => longFormAnswerValidationFetch({
+      questionID: "123456",
+      answer
+    }).then(data => console.log(data))
       .catch((err: Error) => setErrorMessage(err.message)),
     []
   )

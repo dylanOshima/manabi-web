@@ -7,4 +7,6 @@ export type TQuestionAnsweringRequestBody = {
   answer: string;
 };
 
-export type TQuestionAnsweringRequestResponse = TResponse<string, TResponseEvaluation>;
+export type TQuestionAnsweringRequestResponse = {
+  answer: TResponse<string, TResponseEvaluation>
+};

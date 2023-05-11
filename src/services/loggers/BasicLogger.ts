@@ -7,7 +7,7 @@ export default class BasicLogger {
 
   protected data;
 
-  constructor(...args) {
+  constructor({ ...args }) {
     this.data = {
       errors: [],
       ...args,

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import QuestionModel from "../models/Question.model";
 import TextResponseModel from "../models/responses/TextResponse.model";
 import { genID } from "../CoreTypes";
+import BasicLogger from "../loggers/BasicLogger";
 
 export default async function answerValidationRoute(
   req: NextApiRequest,
@@ -18,6 +19,15 @@ export default async function answerValidationRoute(
     questionID
   );
   const question = QuestionModel.fetch(questionID);
-  const evaluatedResponse = await question.genAnswer(newResponse);
-  res.status(200).json(evaluatedResponse.data);
+  const { data } = await question.genAnswer(newResponse);
+  res.status(200).json(data);
+
+  return (new BasicLogger({
+    requestData: {
+      userInput,
+    },
+    responseData: {
+      data,
+    }
+  })).log();
 }
