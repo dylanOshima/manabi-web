@@ -1,14 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import QuestionModel from "../models/Question.model";
 import TextResponseModel from "../models/responses/TextResponse.model";
-import { genID } from "../CoreTypes";
-
-export const questionAnsweringRoute = "/api/[questionID]";
-
-export type TQuestionAnsweringRequestBody = {
-  questionID: string;
-  answer: string;
-};
+import { ID, genID } from "../CoreTypes";
 
 export default async function answerValidationRoute(
   req: NextApiRequest,
