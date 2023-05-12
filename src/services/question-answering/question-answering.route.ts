@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import QuestionModel from "../models/Question.model";
 import TextResponseModel from "../models/responses/TextResponse.model";
-import { genID } from "../CoreTypes";
+import { genID } from "../../consts/ids";
 import BasicLogger from "../loggers/BasicLogger";
 
 export default async function answerValidationRoute(

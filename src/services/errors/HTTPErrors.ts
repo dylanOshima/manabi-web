@@ -1,4 +1,4 @@
-import { HTTPStatusCodes } from "../constants";
+import { HTTPStatusCodes } from "../../consts/HTTPStatusCodes";
 import BaseError from "./BaseError";
 
 export class HTTPError extends BaseError {

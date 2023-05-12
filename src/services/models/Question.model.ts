@@ -1,4 +1,4 @@
-import type { ID } from "../CoreTypes";
+import type { ID } from "../../consts/ids";
 import BasicLogger from "../loggers/BasicLogger";
 import { sendPromptToOpenAI } from "../openai/openai";
 import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";

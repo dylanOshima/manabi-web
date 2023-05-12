@@ -1,4 +1,4 @@
-import type { ID } from "../../CoreTypes";
+import type { ID } from "../../../consts/ids";
 import ResponseModel from "./Response.model";
 
 /**
