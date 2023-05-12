@@ -7,11 +7,28 @@ export default class BasicLogger {
 
   protected data;
 
-  constructor({ ...args }) {
+  constructor({ ...args } = {}) {
     this.data = {
       errors: [],
       ...args,
     };
+  }
+
+  public setAdditionalData(additionalData: object): this {
+    if ('additionalData' in this.data) {
+      this.data.additionalData = {
+        ...this.data.additionalData,
+        additionalData,
+      }
+    } else {
+      this.data.additionalData = additionalData;
+    }
+    return this;
+  }
+
+  public setEvent(event: string): this {
+    this.data.event = event;
+    return this;
   }
 
   public setError(error: BaseError): this {
@@ -26,7 +43,7 @@ export default class BasicLogger {
 
   public log(): void {
     console.log(
-      "***** LOGGING CALL\n",
+      "[LOG INFO]\n",
       this.data
     )
   }
