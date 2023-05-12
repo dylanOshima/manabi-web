@@ -1,9 +1,11 @@
+import { SHOULD_SAVE_MONEY } from "src/consts/globals";
 import type { ID } from "../../consts/ids";
 import BasicLogger from "../loggers/BasicLogger";
 import { sendPromptToOpenAI } from "../openai/openai";
 import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
 import ModelBase from "./ModelBase";
 import TextResponseModel from "./responses/TextResponse.model";
+import { OPENAI_API_SEND_PROMPT } from "../loggers/LoggingEvents";
 
 /**
  * Question model.
@@ -44,15 +46,27 @@ export default class QuestionModel extends ModelBase {
     answer: TextResponseModel,
   ): Promise<TextResponseModel> {
     const prompt = genAnswerFeedbackPrompt(this.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
+    const logger = new BasicLogger({
+      event: OPENAI_API_SEND_PROMPT,
+    })
     try {
-      const resp = await sendPromptToOpenAI(prompt);
-      // Get the first response choice
-      const feedback = resp.data.choices[0].text;
+      let feedback: string = "";
+      if (!SHOULD_SAVE_MONEY) {
+        const resp = await sendPromptToOpenAI(prompt);
+        // Get the first response choice
+        feedback = resp.data.choices[0].text;
+      } else {
+        feedback = "Could have been better but honestly you were just wrong.";
+        logger.setAdditionalData({
+          sentAPIRequest: false
+        });
+      }
       const parsedResponse = answer.parse(feedback);
       answer.data.evaluation = parsedResponse;
+      logger.log();
       return answer;
     } catch (error) {
-      (new BasicLogger()).setError(error).log();
+      logger.setError(error).log();
       throw error;
     }
   }
