@@ -6,36 +6,35 @@ import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
 import ModelBase from "./ModelBase";
 import TextResponseModel from "./responses/TextResponse.model";
 import { OPENAI_API_SEND_PROMPT } from "../loggers/LoggingEvents";
+import { db } from "src/db";
+
+export type TQuestionData = {
+  id: ID,
+  courseID: ID,
+  text: string,
+  responseIDs: ID[],
+  knowledgeIDs: ID[],
+  relatedQuestionIDs: ID[],
+}
 
 /**
  * Question model.
  * Interface for interacting with questions from the backend.
  */
-export default class QuestionModel extends ModelBase {
+export default class QuestionModel extends ModelBase<TQuestionData> {
 
-  constructor(
-    public readonly id: ID,
-    // public readonly course: Course,
-    public readonly text: string,
-    public readonly responseIDs: ID[],
-    // public readonly questionType: TQuestionTypeEnum,
-  ) {
-    super(id);
-  }
+  static type: "question";
 
   /**
    * Fetches an instance of the target model.
    * @param id the id of the instance to fetch
    */
-  public static fetch(
+  public static async fetch(
     id: ID,
   ) {
-    // TODO: Write read from database
-    return new this(
-      id,
-      "This is a test question?",
-      [], // response IDs
-    );
+    await db.read();
+    const data = db.query.get(QuestionModel.type).filter({ id }).first().value();
+    return new QuestionModel(data);
   }
 
   /**
@@ -45,7 +44,7 @@ export default class QuestionModel extends ModelBase {
   public async genAnswer(
     answer: TextResponseModel,
   ): Promise<TextResponseModel> {
-    const prompt = genAnswerFeedbackPrompt(this.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
+    const prompt = genAnswerFeedbackPrompt(this.data.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
     const logger = new BasicLogger({
       event: OPENAI_API_SEND_PROMPT,
     })

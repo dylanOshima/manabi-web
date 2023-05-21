@@ -13,12 +13,12 @@ export default async function answerValidationRoute(
   const userInput = req.body as string;
   // Generate data models
   const responseID = genID();
-  const newResponse = new TextResponseModel(
-    responseID,
-    { userInput },
+  const newResponse = new TextResponseModel({
+    id: responseID,
+    userInput,
     questionID
-  );
-  const question = QuestionModel.fetch(questionID);
+  });
+  const question = await QuestionModel.fetch(questionID);
   const { data } = await question.genAnswer(newResponse);
   res.status(200).json(data);
 

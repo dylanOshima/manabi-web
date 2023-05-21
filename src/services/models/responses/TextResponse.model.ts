@@ -1,3 +1,4 @@
+import { db } from "src/db";
 import type { ID } from "../../../consts/ids";
 import ResponseModel from "./Response.model";
 
@@ -7,19 +8,18 @@ import ResponseModel from "./Response.model";
  */
 export default class TextResponseModel extends ResponseModel<string> {
 
+  static type: "textResponse";
+
   /**
    * Fetches an instance of the target model.
    * @param id the id of the instance to fetch
    */
-  public static fetch(
+  public static async fetch(
     id: ID,
   ) {
-    // TODO: Write read from database
-    return new this(
-      id,
-      { userInput: "This is a test response" },
-      12345,
-    );
+    await db.read();
+    const data = db.query.get(TextResponseModel.type).filter({ id }).first().value();
+    return new TextResponseModel(data);
   }
 
 }

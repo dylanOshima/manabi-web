@@ -1,11 +1,14 @@
 import type { ID } from "../../../consts/ids";
 import ModelBase from "../ModelBase";
 
-export type TResponse<TInput, TEvaluation> = {
+export type TResponseData<TInput> = {
+  id: ID,
+  questionID: ID,
+  // studentID: ID<Student>,
   // Raw user input in response to a target question
   userInput: TInput,
   // Evaluation on the user input
-  evaluation?: TEvaluation
+  evaluation?: TResponseEvaluation
 }
 
 export type TResponseEvaluation = {
@@ -21,16 +24,7 @@ export type TResponseEvaluation = {
  * Response instance model.
  * Interface for interacting with user answers from the backend.
  */
-export default abstract class ResponseModel<TInput> extends ModelBase {
-
-  constructor(
-    public readonly id: ID,
-    public data: TResponse<TInput, TResponseEvaluation>,
-    public readonly questionID: ID,
-    // public readonly student: Student,
-  ) {
-    super(id);
-  }
+export default abstract class ResponseModel<TInput> extends ModelBase<TResponseData<TInput>> {
 
   /**
    * Parses the raw string response from the ML model into evaluation type.
