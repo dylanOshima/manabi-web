@@ -1,3 +1,8 @@
+/**
+ * Current DB Framework: LowDB
+ * Docs: https://github.com/typicode/lowdb
+ */
+
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import lodash from 'lodash';
