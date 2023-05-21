@@ -24,4 +24,10 @@ export default class KnowledgeModel extends ModelBase<TKnowledgeData> {
     return new KnowledgeModel(data);
   }
 
+  public async save(
+  ): Promise<void> {
+    db.data[KnowledgeModel.type].push();
+    await db.write();
+  }
+
 }

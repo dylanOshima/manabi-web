@@ -12,10 +12,7 @@ export default abstract class ModelBase<TData extends { id: ID }> {
   /**
    * Saves the current object in the target backend.
    */
-  public save(): void {
-    // TODO: Write save to database  
-    console.warn(`Save attempted for entity: (${this.constructor.name}: ${this.data.id})`);
-  };
+  public abstract save(): Promise<void>;
 
   /**
    * Deletes the current object in the target backend.

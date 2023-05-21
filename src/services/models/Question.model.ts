@@ -37,6 +37,12 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
     return new QuestionModel(data);
   }
 
+  public async save(
+  ): Promise<void> {
+    db.data[QuestionModel.type].push();
+    await db.write();
+  }
+
   /**
    * Update the evaluation with an answer
    * @param answer the provided answer to this question

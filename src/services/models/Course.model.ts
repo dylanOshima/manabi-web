@@ -24,5 +24,10 @@ export default class CourseModel extends ModelBase<TCourseData> {
     return new CourseModel(data);
   }
 
+  public async save(
+  ): Promise<void> {
+    db.data[CourseModel.type].push();
+    await db.write();
+  }
 
 }

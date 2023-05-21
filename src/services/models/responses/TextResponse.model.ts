@@ -22,4 +22,10 @@ export default class TextResponseModel extends ResponseModel<string> {
     return new TextResponseModel(data);
   }
 
+  public async save(
+  ): Promise<void> {
+    db.data[TextResponseModel.type].push();
+    await db.write();
+  }
+
 }
