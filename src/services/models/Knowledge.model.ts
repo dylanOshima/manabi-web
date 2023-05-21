@@ -14,7 +14,7 @@ export type TKnowledgeData = {
  * Knowledge model.
  */
 export default class KnowledgeModel extends ModelBase<TKnowledgeData> {
-  static type: "knowledge";
+  public static type: "knowledge" = "knowledge";
 
   public static async fetch(
     id: ID,

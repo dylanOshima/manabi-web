@@ -150,6 +150,4 @@ const MOCK_DB_DATA = Object.freeze({
 
 export type TDB = typeof MOCK_DB_DATA;
 
-export type TDBObjectTypes = keyof typeof MOCK_DB_DATA;
-
 export default MOCK_DB_DATA;

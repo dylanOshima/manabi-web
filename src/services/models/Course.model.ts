@@ -14,7 +14,7 @@ export type TCourseData = {
  * Question model.
  */
 export default class CourseModel extends ModelBase<TCourseData> {
-  static type: "course";
+  public static type: "course" = "course";
 
   public static async fetch(
     id: ID,

@@ -1,5 +1,9 @@
-import { SHOULD_SAVE_MONEY } from "src/consts/globals";
 import type { ID } from "../../consts/ids";
+import type { ExpChain, } from "lodash";
+
+import { isNil } from "lodash";
+
+import { SHOULD_SAVE_MONEY } from "src/consts/globals";
 import BasicLogger from "../loggers/BasicLogger";
 import { sendPromptToOpenAI } from "../openai/openai";
 import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
@@ -7,6 +11,7 @@ import ModelBase from "./ModelBase";
 import TextResponseModel from "./responses/TextResponse.model";
 import { OPENAI_API_SEND_PROMPT } from "../loggers/LoggingEvents";
 import { db } from "src/db";
+import { TDB } from "src/db/mock-db-data";
 
 export type TQuestionData = {
   id: ID,
@@ -23,7 +28,7 @@ export type TQuestionData = {
  */
 export default class QuestionModel extends ModelBase<TQuestionData> {
 
-  static type: "question";
+  public static type: "question" = "question";
 
   /**
    * Fetches an instance of the target model.
@@ -33,13 +38,23 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
     id: ID,
   ) {
     await db.read();
-    const data = db.query.get(QuestionModel.type).filter({ id }).first().value();
+    const data = db.query.get(QuestionModel.type).find({ id }).value();
     return new QuestionModel(data);
+  }
+
+  /**
+   * Queries for all questions stored in the DB that are not undefined or null.
+   * @returns ExpChain<TQuestionData>
+   */
+  public static async queryAll(
+  ): Promise<ExpChain<TDB["question"]>> {
+    await db.read();
+    return db.query.get(QuestionModel.type).omitBy(isNil).values();
   }
 
   public async save(
   ): Promise<void> {
-    db.data[QuestionModel.type].push();
+    db.data[QuestionModel.type].push(this.data);
     await db.write();
   }
 

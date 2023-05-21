@@ -8,7 +8,7 @@ import ResponseModel from "./Response.model";
  */
 export default class TextResponseModel extends ResponseModel<string> {
 
-  static type: "textResponse";
+  public static type: "textResponse" = "textResponse";
 
   /**
    * Fetches an instance of the target model.
