@@ -1,9 +1,9 @@
-import { Card, CardBody, CardFooter, CardFooterProps, CardHeader, Heading, Text } from '@chakra-ui/react'
+import { Card, CardBody, CardFooter, Heading, Text } from '@chakra-ui/react'
 import * as React from 'react';
 
-type Props = {
+export type Props = {
   header?: string,
-  footer?: string,
+  footer?: React.ReactNode,
   children: React.ReactNode,
 }
 
