@@ -61,7 +61,6 @@ const CoursePage = ({
         ))}
       </Main>
       <DarkModeSwitch />
-      <UserInput />
     </Container>
   );
 }
