@@ -7,7 +7,7 @@ import type { TCourseData } from '@/services/models/Course.model';
 
 import { Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router';
-import { isNumber, toNumber } from 'lodash';
+import { isFinite, toNumber } from 'lodash';
 
 import { Container } from '@/components/Container';
 import { Hero } from '@/components/Hero';
@@ -22,8 +22,9 @@ export const getServerSideProps: GetServerSideProps<{
   course: TCourseData,
   knowledge: Array<TKnowledgeData>
 }> = async ({ params }) => {
-  const { courseID } = params;
-  if (typeof courseID !== 'string' || isNumber(courseID)) {
+  const { courseID: courseIDUntyped } = params;
+  const courseID = toNumber(courseIDUntyped);
+  if (!isFinite(courseID)) {
     throw new HTTPBadRequest({
       debugMessage: `Passed course ID '${courseID}' is invalid`,
     });
@@ -48,8 +49,8 @@ const CoursePage = ({
 
   const router = useRouter();
   const onClickFactory = useCallback(
-    (id: number) => () => router.push(`/study/${id}/`),
-    [router]
+    (id: number) => () => router.push(`/course/${course.id}/${id}/`),
+    [course.id, router]
   );
 
   return (

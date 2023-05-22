@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   };
 }
 
-const QuestionsPage = ({ knowledge, questions = [] }: Props) => {
+const KnowledgePage = ({ knowledge, questions = [] }: Props) => {
   return (
     <Container height="100vh">
       <Main>
@@ -53,4 +53,4 @@ const QuestionsPage = ({ knowledge, questions = [] }: Props) => {
   );
 }
 
-export default QuestionsPage;
+export default KnowledgePage;
