@@ -17,11 +17,11 @@ const Index = () => (
       }
     />
     <Main>
-      <Feed />
+      <Feed questions={[]} />
     </Main>
     <DarkModeSwitch />
     <UserInput />
   </Container>
 )
 
-export default Index
+export default Index;
