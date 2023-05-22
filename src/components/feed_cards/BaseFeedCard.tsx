@@ -1,4 +1,4 @@
-import { CardProps, defineStyleConfig, extendTheme } from '@chakra-ui/react'
+import { CardProps } from '@chakra-ui/react'
 import { Card, CardBody, CardFooter, Heading, Text } from '@chakra-ui/react'
 import * as React from 'react';
 

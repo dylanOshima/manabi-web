@@ -10,9 +10,7 @@ import { isNumber, toNumber } from 'lodash';
 import { TQuestionData } from '@/services/models/Question.model'
 import { Container } from '@/components/Container';
 import { Main } from '@/components/Main';
-import Feed from '@/components/Feed';
 import { DarkModeSwitch } from '@/components/DarkModeSwitch';
-import UserInput from '@/components/UserInput';
 import { HTTPBadRequest } from '@/services/errors/HTTPErrors';
 import KnowledgeModel from '@/services/models/Knowledge.model';
 import PromptCard from '@/components/feed_cards/PromptCard';
