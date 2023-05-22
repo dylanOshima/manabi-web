@@ -1,5 +1,9 @@
-import { db } from "src/db";
+import type { ExpChain } from "lodash";
 import type { ID } from "../../consts/ids";
+import type { TDB } from "src/db/mock-db-data";
+
+import { isNil } from 'lodash'
+import { db } from "src/db";
 import ModelBase from "./ModelBase";
 
 export type TKnowledgeData = {
@@ -28,6 +32,12 @@ export default class KnowledgeModel extends ModelBase<TKnowledgeData> {
   ): Promise<void> {
     db.data[KnowledgeModel.type].push();
     await db.write();
+  }
+
+  public static async queryAll(
+  ): Promise<ExpChain<TDB["knowledge"]>> {
+    await db.read();
+    return db.query.get(KnowledgeModel.type).omitBy(isNil).values();
   }
 
 }
