@@ -7,6 +7,7 @@
 import { TCourseData } from "@/services/models/Course.model";
 import { TKnowledgeData } from "@/services/models/Knowledge.model";
 import { TQuestionData } from "@/services/models/Question.model"
+import { TStudentData } from "@/services/models/Student.model";
 import { TResponseData } from "@/services/models/responses/Response.model";
 
 // Mock data for Question.model
@@ -139,6 +140,17 @@ const course: Array<TCourseData> = [
   }
 ];
 
+const student: Array<TStudentData> = [
+  {
+    id: 0,
+    email: "btesterson@hotmail.com",
+    firstName: "Bobby",
+    lastName: "Testerson",
+    passwordHash: "password",
+    courseIDs: [0],
+  }
+];
+
 const textResponse: Array<TResponseData<string>> = [];
 
 const MOCK_DB_DATA = Object.freeze({
@@ -146,6 +158,7 @@ const MOCK_DB_DATA = Object.freeze({
   course,
   knowledge,
   textResponse,
+  student
 })
 
 export type TDB = typeof MOCK_DB_DATA;
