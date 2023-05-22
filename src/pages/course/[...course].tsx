@@ -36,7 +36,9 @@ export default CoursePage;
 
 export async function getStaticPaths() {
   return {
-    paths: [],
+    paths: [
+      '/course/'
+    ],
     fallback: true,
   }
 }
