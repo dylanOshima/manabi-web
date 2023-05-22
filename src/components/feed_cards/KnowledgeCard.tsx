@@ -6,8 +6,11 @@ type Props = BaseFeedCardProps;
 /**
  * A standard response from the assistant.
  */
-export default function KnowledgeCard({ header, footer, children: responseContent }: Props) {
-  return <BaseFeedCard header={header} footer={footer}>
+export default function KnowledgeCard({
+  children: responseContent,
+  ...baseCardProps
+}: Props) {
+  return <BaseFeedCard {...baseCardProps}>
     {responseContent}
   </BaseFeedCard>
 }

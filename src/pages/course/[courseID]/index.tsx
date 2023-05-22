@@ -6,16 +6,17 @@ import type { TKnowledgeData } from '@/services/models/Knowledge.model';
 import type { TCourseData } from '@/services/models/Course.model';
 
 import { Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router';
+import { isNumber, toNumber } from 'lodash';
 
 import { Container } from '@/components/Container';
 import { Hero } from '@/components/Hero';
 import { Main } from '@/components/Main';
 import { DarkModeSwitch } from '@/components/DarkModeSwitch';
-import UserInput from '@/components/UserInput';
 import CourseModel from '@/services/models/Course.model';
 import { HTTPBadRequest } from '@/services/errors/HTTPErrors';
-import { isNumber, toNumber } from 'lodash';
 import KnowledgeCard from '@/components/feed_cards/KnowledgeCard';
+import { useCallback } from 'react';
 
 export const getServerSideProps: GetServerSideProps<{
   course: TCourseData,
@@ -44,6 +45,13 @@ const CoursePage = ({
   knowledge = []
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { title, description } = course;
+
+  const router = useRouter();
+  const onClickFactory = useCallback(
+    (id: number) => () => router.push(`/study/${id}/`),
+    [router]
+  );
+
   return (
     <Container height="100vh">
       <Hero
@@ -55,7 +63,8 @@ const CoursePage = ({
           <KnowledgeCard
             key={k.id}
             header={`Unit ${index + 1}`}
-            footer={<Text color="gray.500">{`${k.questionIDs.length} questions to study`}</Text>}>
+            footer={<Text color="gray.500">{`${k.questionIDs.length} questions to study`}</Text>}
+            onClick={onClickFactory(k.id)}>
             <Text>{k.text}</Text>
           </KnowledgeCard>
         ))}
