@@ -1,5 +1,5 @@
 import { NextApiResponse, NextApiRequest } from 'next'
-import withErrorHandling from '../../utils/withErrorHandling';
+import withErrorHandling from 'src/utils/withErrorHandling';
 import answerValidationRoute from '@/services/question-answering/question-answering.route';
 
 /**
