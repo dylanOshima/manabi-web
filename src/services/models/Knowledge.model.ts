@@ -7,6 +7,7 @@ import { isNil, includes } from 'lodash'
 import { db } from "src/db";
 import ModelBase from "./ModelBase";
 import QuestionModel from "./Question.model";
+import { NoDataFoundError } from "../errors/ModelErrors";
 
 export type TKnowledgeData = {
   id: ID,
@@ -27,6 +28,11 @@ export default class KnowledgeModel extends ModelBase<TKnowledgeData> {
   ) {
     await db.read();
     const data = db.query.get(KnowledgeModel.type).filter({ id }).first().value();
+    if (data == null) {
+      throw new NoDataFoundError({
+        debugMessage: "No data found when fetchiing for 'knowledge' from DB."
+      });
+    }
     return new KnowledgeModel(data);
   }
 
