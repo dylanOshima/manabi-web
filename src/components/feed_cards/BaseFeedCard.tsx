@@ -20,10 +20,14 @@ export default function BaseFeedCard({
   footer,
   children: body,
   onClick,
+  ...props
 }: Props) {
-
   return (
-    <Card variant="outline" onClick={onClick} _hover={onClick && styles.hover}>
+    <Card
+      variant="outline"
+      onClick={onClick}
+      _hover={onClick && styles.hover}
+      {...props}>
       <CardBody>
         {header && (
           <Heading size='md'>

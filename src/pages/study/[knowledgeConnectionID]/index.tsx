@@ -1,23 +1,21 @@
 /**
  * Page for creating a study session 
  */
-import type { TKnowledgeData } from '@/services/models/Knowledge.model';
 import type { GetServerSideProps } from 'next/types';
 
-import { Heading } from '@chakra-ui/react';
-
+import { Main } from '@/components/Main';
 import { TQuestionData } from '@/services/models/Question.model';
 import { Container } from '@/components/Container';
-import { Main } from '@/components/Main';
 import { DarkModeSwitch } from '@/components/DarkModeSwitch';
-import PromptCard from '@/components/feed_cards/PromptCard';
 import { maybeID } from 'src/consts/ids';
 import { HTTPBadRequest } from '@/services/errors/HTTPErrors';
 import KnowledgeConnectionModel from '@/services/models/KnowledgeConnection.model';
-import KnowledgeModel from '@/services/models/Knowledge.model';
+import KnowledgeModel, { TKnowledgeData } from '@/services/models/Knowledge.model';
+import StudySessionCore from '@/components/learning/StudySessionCore';
 
 type Props = {
   questions: Array<TQuestionData>,
+  knowledge: TKnowledgeData,
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
@@ -28,23 +26,20 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
     });
   }
   const knowledgeConnection = await KnowledgeConnectionModel.fetch(knowledgeConnectionID);
-  const knowledge = await KnowledgeModel.fetch(knowledgeConnection.data.id);
+  const knowledge = await KnowledgeModel.fetch(knowledgeConnection.data.knowledgeID);
   return {
     props: {
       questions: await knowledge.getQuestionData(),
+      knowledge: knowledge.data,
     }
   };
 }
 
-const StudySessionPage = ({ questions }: Props) => {
+const StudySessionPage = (props: Props) => {
   return (
     <Container height="100vh">
       <Main>
-        <Heading>Learning</Heading>
-        <Heading>Questions</Heading>
-        {questions.map(({ id, text }) => (
-          <PromptCard key={id}>{text}</PromptCard>
-        ))}
+        <StudySessionCore {...props} />
       </Main>
       <DarkModeSwitch />
     </Container>
