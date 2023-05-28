@@ -5,6 +5,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Flex, Spacer } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 import ChakraMarkdown from '../ChakraMarkdown';
+import { longFormAnswerValidationFetch } from '@/services/question-answering/question-answering.fetch';
+import { TQuestionData } from '@/services/models/Question.model';
 
 export type TResponseFeedback = {
   score: number,
@@ -12,8 +14,8 @@ export type TResponseFeedback = {
 };
 
 type Props = {
+  question: TQuestionData,
   index: number,
-  questionText: string,
   onNext: () => void,
 };
 
@@ -22,9 +24,10 @@ type Props = {
  */
 export default function StudyCard({
   index,
-  questionText,
+  question,
   onNext
 }: Props) {
+  const { id: questionID, text: questionText } = question;
   const currentQuestionIndexRef = useRef(index);
   const [response, setResponse] = useState('');
   const [evaluation, setEvaluation] = useState<TResponseFeedback | null>();
@@ -44,15 +47,18 @@ export default function StudyCard({
     , []
   );
 
-  const onSubmit = useCallback(() => {
-    setEvaluation({
-      score: 0.6,
-      feedback: [
-        "Needed more context",
-        "This is not correct."
-      ]
-    })
-  }, []);
+  const onSubmit = useCallback(() =>
+    longFormAnswerValidationFetch({
+      questionID,
+      // TODO: Replace with client side user data caching.
+      studentID: 0,
+      answer: response,
+    }).then(({ evaluation }) =>
+      setEvaluation({
+        score: evaluation.score,
+        feedback: evaluation.feedback,
+      })
+    ), [questionID, response]);
 
   return (
     <>

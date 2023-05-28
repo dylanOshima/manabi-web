@@ -1,12 +1,12 @@
-import { TResponse, TResponseEvaluation } from "../models/responses/Response.model";
+import { ID } from "src/consts/ids";
+import type TextResponseModel from "../models/responses/TextResponse.model";
 
-export const questionAnsweringRouteURI = (questionID: string) => `/api/${questionID}/answer`;
+export const questionAnsweringRouteURI = (questionID: ID) => `/api/${questionID}/answer`;
 
 export type TQuestionAnsweringRequestBody = {
-  questionID: string;
+  questionID: ID;
+  studentID: ID,
   answer: string;
 };
 
-export type TQuestionAnsweringRequestResponse = {
-  answer: TResponse<string, TResponseEvaluation>
-};
+export type TQuestionAnsweringRequestResponse = TextResponseModel['data'];

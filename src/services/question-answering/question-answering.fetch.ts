@@ -1,14 +1,16 @@
-import { TQuestionAnsweringRequestResponse } from "./question-answering.details";
-import { TQuestionAnsweringRequestBody, questionAnsweringRouteURI } from "./question-answering.details";
+import type { TQuestionAnsweringRequestResponse } from "./question-answering.details";
+import type { TQuestionAnsweringRequestBody } from "./question-answering.details";
+
+import { questionAnsweringRouteURI } from "./question-answering.details";
 
 export const longFormAnswerValidationFetch = async (
-  { questionID, answer }: TQuestionAnsweringRequestBody
+  body: TQuestionAnsweringRequestBody
 ) => {
-  const uri = questionAnsweringRouteURI(questionID);
+  const uri = questionAnsweringRouteURI(body.questionID);
   const response = await fetch(uri, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ answer }),
+    body: JSON.stringify(body),
   });
 
   if (response.status !== 200) {

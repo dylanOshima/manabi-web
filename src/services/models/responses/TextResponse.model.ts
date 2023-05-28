@@ -28,4 +28,19 @@ export default class TextResponseModel extends ResponseModel<string> {
     await db.write();
   }
 
+  public static async create(
+    dataFields: Omit<TextResponseModel['data'], 'id' | 'creationTime'>,
+  ): Promise<TextResponseModel> {
+    await db.read();
+    const id = db.data[TextResponseModel.type].length;
+    const data = {
+      id,
+      creationTime: Date.now(),
+      ...dataFields,
+    };
+    db.data[TextResponseModel.type].push(data);
+    await db.write();
+    return new TextResponseModel(data);
+  }
+
 }

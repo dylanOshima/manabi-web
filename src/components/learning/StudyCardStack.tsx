@@ -24,8 +24,7 @@ export default function StudyCardStack({
     min: 0,
     max: maxQuestionIndex
   });
-  const { text: questionText } = questions[currentQuestionIndex];
-
+  const currentQuestion = questions[currentQuestionIndex];
 
   const onNext = useCallback(() => {
     if (currentQuestionIndex === maxQuestionIndex) {
@@ -39,7 +38,7 @@ export default function StudyCardStack({
       <Heading>Study Session</Heading>
       <StudyCard
         index={currentQuestionIndex}
-        questionText={questionText}
+        question={currentQuestion}
         onNext={onNext}
       />
     </>

@@ -4,11 +4,13 @@ import ModelBase from "../ModelBase";
 export type TResponseData<TInput> = {
   id: ID,
   questionID: ID,
-  // studentID: ID<Student>,
+  studentID: ID,
   // Raw user input in response to a target question
   userInput: TInput,
   // Evaluation on the user input
   evaluation?: TResponseEvaluation
+  // Evaluation on the user input
+  creationTime: number
 }
 
 export type TResponseEvaluation = {

@@ -1,3 +1,5 @@
+import BaseError from "@/services/errors/BaseError";
+import { InvalidInputError } from "@/services/errors/InvalidInputError";
 import { isNil, toNumber } from "lodash";
 
 /**
@@ -21,4 +23,19 @@ export function maybeID(val: any): ID | null {
     return null;
   }
   return toNumber(val) as ID;
+}
+
+/**
+ * A value that is an ID. Throws otherwise.
+ * @param val a value that is maybe an ID
+ * @returns ID
+ */
+export function ID(val: any): ID {
+  const id = maybeID(val);
+  if (id == null) {
+    throw new InvalidInputError({
+      debugMessage: `Passed param was not an ID, received: ${val}.`,
+    });
+  }
+  return id;
 }
