@@ -41,16 +41,15 @@ export const genAnswerFeedbackPrompt = (
   - highlight what parts of the student's answer was correct
 
   Let's do it step by step when evaluating an answer:
-  1. Based on the text, highlight any points that the student got correct
-  2. Based on the text, highlight any points the student might have missed 
+  1. Based on the text, highlight any points that the student got correct.
+  2. Based on the text, highlight any points the student might have missed. 
 
-  Provide your feedback as a JSON response. In the form of:
-  '''
+  Write feedback addressed to the student. Feedback should be in a JSON response
+  in the form of:
   {
     "correctPoints": // An array of strings
     "missedPoints": // An array of strings
   }
-  '''
 
   This is the information the student was provided: "${context}"
   
