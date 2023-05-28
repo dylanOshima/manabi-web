@@ -3,17 +3,15 @@ import * as React from 'react';
 import BaseFeedCard from '../feed_cards/BaseFeedCard';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Flex, Spacer } from '@chakra-ui/react';
-import { CheckCircleIcon } from '@chakra-ui/icons';
+import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
 import ChakraMarkdown from '../ChakraMarkdown';
 import { longFormAnswerValidationFetch } from '@/services/question-answering/question-answering.fetch';
 import { TQuestionData } from '@/services/models/Question.model';
 import { useRouter } from 'next/router';
 import { ID } from 'src/consts/ids';
+import { TResponseEvaluation } from '@/services/models/responses/Response.model';
 
-export type TResponseFeedback = {
-  score: number,
-  feedback: string[],
-};
+export type TResponseFeedback = Omit<TResponseEvaluation, 'raw'>;
 
 type Props = {
   question: TQuestionData,
@@ -103,9 +101,15 @@ export default function StudyCard({
                 Evaluation
               </Heading>
               <List marginY={4} spacing={3}>
-                {evaluation.feedback.map((item, index) => (
+                {evaluation.feedback.correctPoints.map((item, index) => (
                   <ListItem key={index}>
                     <ListIcon as={CheckCircleIcon} color='green.500' />
+                    {item}
+                  </ListItem>
+                ))}
+                {evaluation.feedback.missedPoints.map((item, index) => (
+                  <ListItem key={index}>
+                    <ListIcon as={WarningIcon} color='red.500' />
                     {item}
                   </ListItem>
                 ))}

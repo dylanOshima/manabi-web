@@ -1,7 +1,9 @@
+import { OPENAI_VALIDATE_GPT_FEEDBACK } from "@/services/loggers/LoggingEvents";
 import type { ID } from "../../../consts/ids";
 import KnowledgeModel from "../Knowledge.model";
 import KnowledgeConnectionModel from "../KnowledgeConnection.model";
 import ModelBase from "../ModelBase";
+import Logger from "@/services/loggers/Logger";
 
 export type TResponseData<TInput> = {
   id: ID,
@@ -22,7 +24,10 @@ export type TResponseEvaluation = {
   // score of correctness (range from 0 to 1 where 1 is most correct and 0 is nothing correct)
   score: number,
   // Feedback items from GPT
-  feedback: string[],
+  feedback: {
+    correctPoints: string[],
+    missedPoints: string[],
+  },
 }
 
 /**
@@ -36,12 +41,23 @@ export default abstract class ResponseModel<TInput> extends ModelBase<TResponseD
    * @param output output from the ML model as a single string
    */
   public parse(raw: string): TResponseEvaluation {
-    // TODO: Write proper response parsing
-    return {
-      raw,
-      score: 0.7,
-      feedback: ["Next time use more words.", "Could have used an excalmation point there!"]
-    };
+    const logger = new Logger().setEvent(OPENAI_VALIDATE_GPT_FEEDBACK)
+    try {
+      const feedback = JSON.parse(raw) as TResponseEvaluation['feedback'];
+      const evaluation = {
+        raw,
+        // Heuristic for evaluating how correct a student was. Should be improved.
+        score: feedback.correctPoints.length / (feedback.correctPoints.length + feedback.missedPoints.length),
+        feedback,
+      };
+      logger.setAdditionalData({ success: true, evaluation });
+      return evaluation;
+    } catch (err) {
+      logger.setAdditionalData({ success: false }).setError(err);
+      throw new err;
+    } finally {
+      logger.log();
+    }
   }
 
   /**

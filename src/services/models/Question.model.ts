@@ -1,5 +1,5 @@
 import type { ID } from "../../consts/ids";
-import type { ExpChain, } from "lodash";
+import type { ExpChain } from "lodash";
 
 import { isNil } from "lodash";
 
@@ -60,15 +60,25 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
 
   /**
    * Update the evaluation with an answer
-   * @param answer the provided answer to this question
+   * @param response the provided answer to this question
    */
   public async genAnswer(
-    answer: TextResponseModel,
+    response: TextResponseModel,
   ): Promise<TextResponseModel> {
-    const prompt = genAnswerFeedbackPrompt(this.data.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
     const logger = new Logger({
-      event: OPENAI_API_SEND_PROMPT,
-    })
+      response: response,
+    }).setEvent(
+      OPENAI_API_SEND_PROMPT
+    );
+    const knowledge = await response.getKnowledge();
+    const prompt = genAnswerFeedbackPrompt(
+      this.data.text,
+      knowledge.data.text,
+      response.data.userInput
+    );
+    logger.setAdditionalData({
+      prompt
+    });
     try {
       let feedback: string = "";
       if (!SHOULD_SAVE_MONEY) {
@@ -76,18 +86,28 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
         // Get the first response choice
         feedback = resp.data.choices[0].text;
       } else {
-        feedback = "Could have been better but honestly you were just wrong.";
+        feedback = `{
+          "correctPoints": [
+            "The student correctly identified that URL stands for Universal Resource Locator."
+          ],
+          "missedPoints": [
+            "The student missed the information provided that URL stands for Uniform Resource Locator, not Universal Resource Locator."
+          ]
+        }`;
         logger.setAdditionalData({
           sentAPIRequest: false
         });
       }
-      const parsedResponse = answer.parse(feedback);
-      answer.data.evaluation = parsedResponse;
-      logger.log();
-      return answer;
+      const parsedResponse = response.parse(feedback);
+      logger.setAdditionalData({ parsedResponse });
+      response.data.evaluation = parsedResponse;
+      await response.save();
+      return response;
     } catch (error) {
-      logger.setError(error).log();
+      logger.setError(error);
       throw error;
+    } finally {
+      logger.log();
     }
   }
 

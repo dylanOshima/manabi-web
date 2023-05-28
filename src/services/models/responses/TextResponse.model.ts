@@ -1,6 +1,7 @@
 import { db } from "src/db";
 import type { ID } from "../../../consts/ids";
 import ResponseModel from "./Response.model";
+import { set } from "lodash";
 
 /**
  * Text response instance model.
@@ -24,7 +25,12 @@ export default class TextResponseModel extends ResponseModel<string> {
 
   public async save(
   ): Promise<void> {
-    db.data[TextResponseModel.type].push();
+    await db.read();
+    db.data = set(
+      db.data,
+      `${TextResponseModel.type}[${this.data.id}]`,
+      this.data
+    );
     await db.write();
   }
 

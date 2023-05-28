@@ -41,25 +41,22 @@ export const genAnswerFeedbackPrompt = (
   - highlight what parts of the student's answer was correct
 
   Let's do it step by step when evaluating an answer:
-  1. Decide whether the student was correct
-  2. Based on the text highlight any points that the student got correct
-  3. Based on the text highlight any points the student might have missed 
+  1. Based on the text, highlight any points that the student got correct
+  2. Based on the text, highlight any points the student might have missed 
 
-  Text: ${context}
+  Provide your feedback as a JSON response. In the form of:
+  '''
+  {
+    "correctPoints": // An array of strings
+    "missedPoints": // An array of strings
+  }
+  '''
 
-  Question: What is the main difference between monopolistic and perfectly competitive markets?
+  This is the information the student was provided: "${context}"
+  
+  The student was then asked: "${question}"
 
-  Answer: the main difference between monopolistic and perfectly competitive markets is in the number of firms in the market. Monopolistic markets have only a single firm that dictates price and supply levels, whereas a perfectly competitive market has no one firm controlling the market.
+  The student responded with: "${answer}"
 
-  Evaluation: Correct. Correctly highlighted that monoplistic markets have a single firm that controls price and supply levels for goods and services. Highlighted that in a perfectly competitive market there are multiple players that equally control the market.
-
-  Answer: there is no difference
-
-  Evaluation: Incorrect. Should have highlighted that monoplistic markets have only one firm that controls the supply and price for goods and services. Should have highlighted that in contrast perfectly competitive markets have more than one firm where no one firm has full market control.
-
-  Question: ${question}
-
-  Answer: ${answer}
-
-  Evaluation:
+  What is your feedback?
 `.trim();
