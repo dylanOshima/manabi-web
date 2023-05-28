@@ -1,11 +1,19 @@
-import { Textarea } from '@chakra-ui/react';
+import { Box, Text, Heading, Stack, StackDivider, Textarea, List, ListItem, ListIcon } from '@chakra-ui/react';
 import * as React from 'react';
 import BaseFeedCard from '../feed_cards/BaseFeedCard';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, ButtonGroup, Flex, Spacer } from '@chakra-ui/react';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+
+export type TResponseFeedback = {
+  score: number,
+  feedback: string[],
+};
 
 type Props = {
   index: number,
   questionText: string,
+  onNext: () => void,
 };
 
 /*
@@ -14,15 +22,36 @@ type Props = {
 export default function StudyCard({
   index,
   questionText,
+  onNext
 }: Props) {
-  const [response, setResponse] = useState('');
   const currentQuestionIndexRef = useRef(index);
+  const [response, setResponse] = useState('');
+  const [evaluation, setEvaluation] = useState<TResponseFeedback | null>();
 
+  const hasSubmitted = evaluation != null;
+
+  // When we get a new question, reset our current state.
   useEffect(() => {
     if (currentQuestionIndexRef.current !== index) {
       setResponse('')
+      setEvaluation(null);
     }
-  }, [index])
+  }, [index]);
+
+  const onChange = useCallback(
+    (e) => setResponse(e.target.value)
+    , []
+  );
+
+  const onSubmit = useCallback(() => {
+    setEvaluation({
+      score: 0.6,
+      feedback: [
+        "Needed more context",
+        "This is not correct."
+      ]
+    })
+  }, []);
 
   return (
     <>
@@ -33,17 +62,60 @@ export default function StudyCard({
       >
         {questionText}
       </BaseFeedCard>
-      <Textarea
-        display="block"
-        marginBottom="20px"
-        placeholder="Write an answer"
-        resize="vertical"
-        value={response}
-        onChange={useCallback(
-          (e) => setResponse(e.target.value)
-          , []
-        )}
-      />
+      <BaseFeedCard
+        variant="outline"
+        colorScheme="whiteAlpha"
+      >
+        <Stack divider={<StackDivider />} spacing='4'>
+          <Box>
+            <Heading size='xs' textTransform='uppercase'>
+              Response
+            </Heading>
+            {
+              hasSubmitted ?
+                <Text marginY={4}>
+                  {response}
+                </Text>
+                : <Textarea
+                  marginY={4}
+                  placeholder="Write an answer"
+                  resize="vertical"
+                  value={response}
+                  onChange={onChange}
+                />
+            }
+          </Box>
+          {hasSubmitted && (
+            <Box>
+              <Heading size='xs' textTransform='uppercase'>
+                Evaluation
+              </Heading>
+              <List marginY={4} spacing={3}>
+                {evaluation.feedback.map((item, index) => (
+                  <ListItem key={index}>
+                    <ListIcon as={CheckCircleIcon} color='green.500' />
+                    {item}
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          )}
+        </Stack>
+      </BaseFeedCard>
+      <Flex minWidth='max-content' alignItems='center' gap='2'>
+        <Spacer />
+        {
+          hasSubmitted ? (
+            <Button colorScheme='green' onClick={onNext}>
+              Next
+            </Button>
+          ) : (
+            <Button colorScheme='green' onClick={onSubmit}>
+              Submit
+            </Button>
+          )
+        }
+      </Flex>
     </>
   );
 };

@@ -22,7 +22,9 @@ export default function StudySessionCore({
     isOpen: isKnowledgeModalOpen,
     onClose: hideKnowledgeModal,
     onOpen: showKnowledgeModal
-  } = useDisclosure();
+  } = useDisclosure({
+    defaultIsOpen: true,
+  });
 
   // Render the info modal
   useEffect(() => {

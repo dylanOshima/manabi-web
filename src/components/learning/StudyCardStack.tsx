@@ -1,7 +1,9 @@
-import * as React from 'react';
-import { useCallback } from 'react';
+import type { TResponseFeedback } from './StudyCard';
 
-import { Button, ButtonGroup, Flex, Heading, Spacer, useCounter } from '@chakra-ui/react';
+import * as React from 'react';
+import { useCallback, useState } from 'react';
+
+import { Heading, useCounter } from '@chakra-ui/react';
 import { TQuestionData } from '@/services/models/Question.model';
 import StudyCard from './StudyCard';
 
@@ -24,7 +26,8 @@ export default function StudyCardStack({
   });
   const { text: questionText } = questions[currentQuestionIndex];
 
-  const onSubmit = useCallback(() => {
+
+  const onNext = useCallback(() => {
     if (currentQuestionIndex === maxQuestionIndex) {
       alert("Complete!");
     }
@@ -37,15 +40,8 @@ export default function StudyCardStack({
       <StudyCard
         index={currentQuestionIndex}
         questionText={questionText}
+        onNext={onNext}
       />
-      <Flex minWidth='max-content' alignItems='center' gap='2'>
-        <Spacer />
-        <ButtonGroup gap='2'>
-          <Button colorScheme='green' onClick={onSubmit}>
-            Submit
-          </Button>
-        </ButtonGroup>
-      </Flex>
     </>
   );
 };
