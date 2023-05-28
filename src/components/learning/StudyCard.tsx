@@ -7,6 +7,8 @@ import { CheckCircleIcon } from '@chakra-ui/icons';
 import ChakraMarkdown from '../ChakraMarkdown';
 import { longFormAnswerValidationFetch } from '@/services/question-answering/question-answering.fetch';
 import { TQuestionData } from '@/services/models/Question.model';
+import { useRouter } from 'next/router';
+import { ID } from 'src/consts/ids';
 
 export type TResponseFeedback = {
   score: number,
@@ -47,9 +49,12 @@ export default function StudyCard({
     , []
   );
 
+  const { query } = useRouter();
+  const knowledgeConnectionID = ID(query.knowledgeConnectionID);
   const onSubmit = useCallback(() =>
     longFormAnswerValidationFetch({
       questionID,
+      knowledgeConnectionID,
       // TODO: Replace with client side user data caching.
       studentID: 0,
       answer: response,
@@ -58,7 +63,7 @@ export default function StudyCard({
         score: evaluation.score,
         feedback: evaluation.feedback,
       })
-    ), [questionID, response]);
+    ), [knowledgeConnectionID, questionID, response]);
 
   return (
     <>

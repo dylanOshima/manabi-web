@@ -1,10 +1,13 @@
 import type { ID } from "../../../consts/ids";
+import KnowledgeModel from "../Knowledge.model";
+import KnowledgeConnectionModel from "../KnowledgeConnection.model";
 import ModelBase from "../ModelBase";
 
 export type TResponseData<TInput> = {
   id: ID,
   questionID: ID,
   studentID: ID,
+  knowledgeConnectionID: ID,
   // Raw user input in response to a target question
   userInput: TInput,
   // Evaluation on the user input
@@ -39,6 +42,14 @@ export default abstract class ResponseModel<TInput> extends ModelBase<TResponseD
       score: 0.7,
       feedback: ["Next time use more words.", "Could have used an excalmation point there!"]
     };
+  }
+
+  /**
+   * Returns the knowledge that was prompted for this response.
+   */
+  public async getKnowledge(): Promise<KnowledgeModel> {
+    const knowledgeConnection = await KnowledgeConnectionModel.fetch(this.data.knowledgeConnectionID);
+    return await KnowledgeModel.fetch(knowledgeConnection.data.knowledgeID);
   }
 
 }

@@ -4,7 +4,8 @@ import type TextResponseModel from "../models/responses/TextResponse.model";
 export const questionAnsweringRouteURI = (questionID: ID) => `/api/${questionID}/answer`;
 
 export type TQuestionAnsweringRequestBody = {
-  questionID: ID;
+  questionID: ID,
+  knowledgeConnectionID: ID;
   studentID: ID,
   answer: string;
 };
