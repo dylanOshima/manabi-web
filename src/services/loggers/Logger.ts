@@ -3,7 +3,7 @@ import BaseError from "../errors/BaseError"
 /**
  * Basic logger
  */
-export default class BasicLogger {
+export default class Logger {
 
   protected data;
 
@@ -14,14 +14,15 @@ export default class BasicLogger {
     };
   }
 
+  /**
+   * Add additional data to the logging body. 
+   * @param additionalData {...data}
+   * @returns 
+   */
   public setAdditionalData(additionalData: object): this {
-    if ('additionalData' in this.data) {
-      this.data.additionalData = {
-        ...this.data.additionalData,
-        additionalData,
-      }
-    } else {
-      this.data.additionalData = additionalData;
+    this.data = {
+      ...this.data,
+      ...additionalData
     }
     return this;
   }
@@ -43,7 +44,7 @@ export default class BasicLogger {
 
   public log(): void {
     console.log(
-      "[LOG INFO]\n",
+      "[LOG INFO] ",
       this.data
     )
   }

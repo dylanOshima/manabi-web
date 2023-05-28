@@ -4,7 +4,7 @@ import type { TQuestionAnsweringRequestBody } from "./question-answering.details
 import QuestionModel from "../models/Question.model";
 import TextResponseModel from "../models/responses/TextResponse.model";
 import { ID } from "../../consts/ids";
-import BasicLogger from "../loggers/BasicLogger";
+import Logger from "../loggers/Logger";
 import { VALIDATE_USER_ANSWER } from "../loggers/LoggingEvents";
 
 export default async function answerValidationRoute(
@@ -25,7 +25,7 @@ export default async function answerValidationRoute(
   const { data } = await question.genAnswer(newResponse);
 
   res.status(200).json(data);
-  return (new BasicLogger({
+  return (new Logger({
     requestData: {
       questionID,
       studentID,

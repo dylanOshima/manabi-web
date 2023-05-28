@@ -4,7 +4,7 @@ import type { ExpChain, } from "lodash";
 import { isNil } from "lodash";
 
 import { SHOULD_SAVE_MONEY } from "src/consts/globals";
-import BasicLogger from "../loggers/BasicLogger";
+import Logger from "../loggers/Logger";
 import { sendPromptToOpenAI } from "../openai/openai";
 import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
 import ModelBase from "./ModelBase";
@@ -66,7 +66,7 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
     answer: TextResponseModel,
   ): Promise<TextResponseModel> {
     const prompt = genAnswerFeedbackPrompt(this.data.text, "WHERE IS THIS COMING FROM?", answer.data.userInput);
-    const logger = new BasicLogger({
+    const logger = new Logger({
       event: OPENAI_API_SEND_PROMPT,
     })
     try {

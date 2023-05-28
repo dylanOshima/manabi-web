@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { TKnowledgeConnectionRequestBody, TKnowledgeConnectionRequestResponse } from "./create-knowledge-connection.details";
 
-import BasicLogger from "../loggers/BasicLogger";
+import Logger from "../loggers/Logger";
 import KnowledgeConnectionModel from "../models/KnowledgeConnection.model";
 import { HTTPInternalServerError } from "../errors/HTTPErrors";
 
@@ -9,7 +9,7 @@ export default async function createKnowledgeConnectionRoute(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const logger = new BasicLogger().setEvent("createKnowledgeConnectionRoute");
+  const logger = new Logger().setEvent("createKnowledgeConnectionRoute");
   try {
     const connectionInput = req.body as TKnowledgeConnectionRequestBody;
     logger.setAdditionalData({
