@@ -2,8 +2,9 @@ import { Box, Text, Heading, Stack, StackDivider, Textarea, List, ListItem, List
 import * as React from 'react';
 import BaseFeedCard from '../feed_cards/BaseFeedCard';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, ButtonGroup, Flex, Spacer } from '@chakra-ui/react';
+import { Button, Flex, Spacer } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
+import ChakraMarkdown from '../ChakraMarkdown';
 
 export type TResponseFeedback = {
   score: number,
@@ -60,7 +61,7 @@ export default function StudyCard({
         border="medium"
         borderColor={response.length > 0 && 'green'}
       >
-        {questionText}
+        <ChakraMarkdown>{questionText}</ChakraMarkdown>
       </BaseFeedCard>
       <BaseFeedCard
         variant="outline"

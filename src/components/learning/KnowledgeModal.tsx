@@ -1,6 +1,7 @@
 import { TKnowledgeData } from '@/services/models/Knowledge.model';
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@chakra-ui/react';
 import * as React from 'react';
+import ChakraMarkdown from '../ChakraMarkdown';
 
 type Props = {
   knowledge: TKnowledgeData,
@@ -22,9 +23,11 @@ export default function KnowledgeModal({
   return (
     <Modal isOpen={shouldShow} onClose={onClose} size="full" >
       <ModalContent>
-        <ModalHeader>Review</ModalHeader>
+        <ModalHeader fontSize="4xl">Review</ModalHeader>
         <ModalBody>
-          <Text>{knowledgeText}</Text>
+          <Box>
+            <ChakraMarkdown>{knowledgeText}</ChakraMarkdown>
+          </Box>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme='green' mr={3} onClick={onClose}>
