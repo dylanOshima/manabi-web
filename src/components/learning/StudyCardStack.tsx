@@ -9,13 +9,15 @@ import StudyCard from './StudyCard';
 
 type Props = {
   questions: Array<TQuestionData>,
+  onComplete: () => void,
 };
 
 /*
  * Card for studying
  */
 export default function StudyCardStack({
-  questions
+  questions,
+  onComplete
 }: Props) {
   const maxQuestionIndex = questions.length - 1;
   const { valueAsNumber: currentQuestionIndex, increment } = useCounter({
@@ -28,10 +30,10 @@ export default function StudyCardStack({
 
   const onNext = useCallback(() => {
     if (currentQuestionIndex === maxQuestionIndex) {
-      alert("Complete!");
+      onComplete();
     }
     increment();
-  }, [currentQuestionIndex, increment, maxQuestionIndex]);
+  }, [currentQuestionIndex, increment, maxQuestionIndex, onComplete]);
 
   return (
     <>

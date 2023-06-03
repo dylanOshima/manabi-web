@@ -62,4 +62,11 @@ export default class KnowledgeConnectionModel extends ModelBase<TKnowledgeConnec
     return db.query.get(KnowledgeConnectionModel.type).omitBy(isNil).values();
   }
 
+  public async getStrength(): Promise<number> {
+
+    // 
+
+    return 0;
+  }
+
 }

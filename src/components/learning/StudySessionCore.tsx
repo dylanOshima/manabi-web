@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { TQuestionData } from '@/services/models/Question.model';
 import { TKnowledgeData } from '@/services/models/Knowledge.model';
 import KnowledgeModal from './KnowledgeModal';
 import StudyCardStack from './StudyCardStack';
+import { StudySessionProgressStates, useStudySessionProgressState } from './StudySessionProgressState';
+import StudySessionCompleteModal from './StudySessionCompleteModal';
 
 type Props = {
   questions: Array<TQuestionData>,
@@ -18,27 +20,37 @@ export default function StudySessionCore({
   questions,
   knowledge
 }: Props) {
+  const { currentState, nextState } = useStudySessionProgressState();
   const {
     isOpen: isKnowledgeModalOpen,
     onClose: hideKnowledgeModal,
-    onOpen: showKnowledgeModal
   } = useDisclosure({
-    defaultIsOpen: true,
+    defaultIsOpen: currentState === StudySessionProgressStates.KNOWLEDGE_REVIEW,
   });
 
-  // Render the info modal
-  useEffect(() => {
-    showKnowledgeModal();
-  }, [showKnowledgeModal]);
+  const onClose = useCallback(() => {
+    hideKnowledgeModal();
+    nextState();
+  }, [hideKnowledgeModal, nextState])
 
-  return (
-    <>
-      <KnowledgeModal
-        knowledge={knowledge}
-        shouldShow={isKnowledgeModalOpen}
-        onClose={hideKnowledgeModal}
-      />
-      <StudyCardStack questions={questions} />
-    </>
-  );
+  switch (currentState) {
+    case StudySessionProgressStates.KNOWLEDGE_REVIEW:
+      return (
+        <KnowledgeModal
+          knowledge={knowledge}
+          shouldShow={isKnowledgeModalOpen}
+          onClose={onClose}
+        />
+      );
+    case StudySessionProgressStates.STUDY_CARDS:
+      return (
+        <StudyCardStack questions={questions} onComplete={nextState} />
+      );
+    case StudySessionProgressStates.RESULTS:
+      return (
+        <StudySessionCompleteModal
+          knowledge={knowledge}
+        />
+      );
+  }
 };
