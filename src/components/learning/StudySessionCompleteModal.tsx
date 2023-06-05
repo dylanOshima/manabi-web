@@ -74,7 +74,7 @@ export default function StudySessionCompleteModal(_props: Props) {
 
 const Results = ({ results = 0.75 }) => {
   // strength is a decinmal, thus converting it to a percentage.
-  const resultsPercentage = results * 100;
+  const resultsPercentage = Math.round(results * 100);
   const { isAtMax, increment, value } = useCounter({
     defaultValue: 0,
     max: resultsPercentage,
