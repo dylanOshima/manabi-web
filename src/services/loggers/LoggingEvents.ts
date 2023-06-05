@@ -9,3 +9,5 @@ export const OPENAI_VALIDATE_GPT_FEEDBACK = "OPENAI_VALIDATE_GPT_FEEDBACK";
 // Route Events
 // **** Question-Answering
 export const VALIDATE_USER_ANSWER = 'VALIDATE_USER_ANSWER';
+// **** Knowledge Connection Resulkts
+export const GET_KNOWLEDGE_CONNECTION_RESULTS = 'GET_KNOWLEDGE_CONNECTION_RESULTS';

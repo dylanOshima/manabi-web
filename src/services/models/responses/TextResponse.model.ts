@@ -1,7 +1,8 @@
+import { set } from "lodash";
 import { db } from "src/db";
 import type { ID } from "../../../consts/ids";
+import KnowledgeConnectionModel from "../KnowledgeConnection.model";
 import ResponseModel from "./Response.model";
-import { set } from "lodash";
 
 /**
  * Text response instance model.
@@ -45,6 +46,19 @@ export default class TextResponseModel extends ResponseModel<string> {
       ...dataFields,
     };
     db.data[TextResponseModel.type].push(data);
+    // Update reverse edges
+    const knowledgeConnection = db.data[KnowledgeConnectionModel.type][data.knowledgeConnectionID];
+    db.data = set(
+      db.data,
+      `${KnowledgeConnectionModel.type}[${knowledgeConnection.id}]`,
+      {
+        ...knowledgeConnection,
+        responseIDs: [
+          ...knowledgeConnection.responseIDs,
+          id
+        ]
+      }
+    );
     await db.write();
     return new TextResponseModel(data);
   }

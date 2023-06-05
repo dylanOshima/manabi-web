@@ -1,34 +1,45 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { TKnowledgeConnectionResultsRequestBody } from "./knowledge-connection-results.details";
+import type { TKnowledgeConnectionResultsRequestBody, TKnowledgeConnectionResultsRequestResponse } from "./knowledge-connection-results.details";
 
-import QuestionModel from "../models/Question.model";
-import TextResponseModel from "../models/responses/TextResponse.model";
-import { ID, maybeID } from "../../consts/ids";
+import { maybeID } from "../../consts/ids";
+import { HTTPBadRequest } from "../errors/HTTPErrors";
 import Logger from "../loggers/Logger";
-import { VALIDATE_USER_ANSWER } from "../loggers/LoggingEvents";
+import { GET_KNOWLEDGE_CONNECTION_RESULTS } from "../loggers/LoggingEvents";
 import KnowledgeConnectionModel from "../models/KnowledgeConnection.model";
 
 export default async function knowledgeConnectionResultsRoute(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Fetch parameters from request
-  const body = req.body as TKnowledgeConnectionResultsRequestBody;
-  const knowledgeConnectionID = ID(body.knowledgeConnectionID);
-  // Generate data models
-  const connectiion = await KnowledgeConnectionModel.fetch(
-    knowledgeConnectionID
-  );
-
-  res.status(200).json(data);
-  return (new Logger({
-    requestData: {
-      questionID,
-      studentID,
-      userInput,
-    },
-    responseData: {
-      ...data,
+  const logger = new Logger().setEvent(GET_KNOWLEDGE_CONNECTION_RESULTS);
+  try {
+    // Fetch parameters from request
+    const body = req.body as TKnowledgeConnectionResultsRequestBody;
+    const knowledgeConnectionID = maybeID(req.query.knowledgeConnectionID);
+    logger.setAdditionalData({
+      requestData: {
+        knowledgeConnectionID,
+      }
+    });
+    if(knowledgeConnectionID == null) {
+      throw new HTTPBadRequest("Route had a non-ID knowledge connection");
     }
-  })).setEvent(VALIDATE_USER_ANSWER).log();
+    // Generate data models
+    const connection = await KnowledgeConnectionModel.fetch(
+      knowledgeConnectionID
+    );
+    const data = {
+      strength: await connection.getStrength()
+    } as TKnowledgeConnectionResultsRequestResponse;
+    logger.setAdditionalData({
+      responseData: {
+        ...data
+      }
+    });
+    res.status(200).json(data);
+  } catch(error) {
+    logger.setError(error);
+  } finally {
+    return logger.log();
+  }
 }
