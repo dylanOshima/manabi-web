@@ -1,37 +1,36 @@
-import { useCallback } from 'react';
-import { useDisclosure } from '@chakra-ui/react';
+import { useDisclosure } from "@chakra-ui/react";
+import { useCallback } from "react";
 
-import { TQuestionData } from '@/services/models/Question.model';
-import { TKnowledgeData } from '@/services/models/Knowledge.model';
-import KnowledgeModal from './KnowledgeModal';
-import StudyCardStack from './StudyCardStack';
-import { StudySessionProgressStates, useStudySessionProgressState } from './StudySessionProgressState';
-import StudySessionCompleteModal from './StudySessionCompleteModal';
+import { TKnowledgeData } from "@/services/models/Knowledge.model";
+import { TQuestionData } from "@/services/models/Question.model";
+import KnowledgeModal from "./KnowledgeModal";
+import StudyCardStack from "./StudyCardStack";
+import StudySessionCompleteModal from "./StudySessionCompleteModal";
+import {
+  StudySessionProgressStates,
+  useStudySessionProgressState,
+} from "./StudySessionProgressState";
 
 type Props = {
-  questions: Array<TQuestionData>,
-  knowledge: TKnowledgeData,
-}
+  questions: Array<TQuestionData>;
+  knowledge: TKnowledgeData;
+};
 
 /*
  * Study session page
  */
-export default function StudySessionCore({
-  questions,
-  knowledge
-}: Props) {
+export default function StudySessionCore({ questions, knowledge }: Props) {
   const { currentState, nextState } = useStudySessionProgressState();
-  const {
-    isOpen: isKnowledgeModalOpen,
-    onClose: hideKnowledgeModal,
-  } = useDisclosure({
-    defaultIsOpen: currentState === StudySessionProgressStates.KNOWLEDGE_REVIEW,
-  });
+  const { isOpen: isKnowledgeModalOpen, onClose: hideKnowledgeModal } =
+    useDisclosure({
+      defaultIsOpen:
+        currentState === StudySessionProgressStates.KNOWLEDGE_REVIEW,
+    });
 
   const onClose = useCallback(() => {
     hideKnowledgeModal();
     nextState();
-  }, [hideKnowledgeModal, nextState])
+  }, [hideKnowledgeModal, nextState]);
 
   switch (currentState) {
     case StudySessionProgressStates.KNOWLEDGE_REVIEW:
@@ -44,13 +43,12 @@ export default function StudySessionCore({
       );
     case StudySessionProgressStates.STUDY_CARDS:
       return (
-        <StudyCardStack questions={questions} onComplete={nextState} />
-      );
-    case StudySessionProgressStates.RESULTS:
-      return (
-        <StudySessionCompleteModal
-          knowledge={knowledge}
+        <StudyCardStack
+          questions={questions}
+          onComplete={nextState}
         />
       );
+    case StudySessionProgressStates.RESULTS:
+      return <StudySessionCompleteModal />;
   }
-};
+}
