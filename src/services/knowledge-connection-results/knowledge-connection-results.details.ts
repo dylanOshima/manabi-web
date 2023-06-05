@@ -1,4 +1,4 @@
-import { ID } from "src/consts/ids";
+import { ID } from "@/lib/consts/ids";
 
 export const knowledgeConnectionResultsRouteURI = (knowledgeConnectionID: ID) => `/api/knowledge-connection/${knowledgeConnectionID}/results`;
 

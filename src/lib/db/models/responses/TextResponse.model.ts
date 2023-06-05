@@ -1,5 +1,5 @@
+import { db } from "@/lib/db";
 import { set } from "lodash";
-import { db } from "src/db";
 import type { ID } from "../../../consts/ids";
 import KnowledgeConnectionModel from "../KnowledgeConnection.model";
 import ResponseModel from "./Response.model";

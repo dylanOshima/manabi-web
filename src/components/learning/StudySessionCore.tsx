@@ -1,8 +1,8 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useCallback } from "react";
 
-import { TKnowledgeData } from "@/services/models/Knowledge.model";
-import { TQuestionData } from "@/services/models/Question.model";
+import { TKnowledgeData } from "@/lib/db/models/Knowledge.model";
+import { TQuestionData } from "@/lib/db/models/Question.model";
 import KnowledgeModal from "./KnowledgeModal";
 import StudyCardStack from "./StudyCardStack";
 import StudySessionCompleteModal from "./StudySessionCompleteModal";

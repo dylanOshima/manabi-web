@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { TQuestionAnsweringRequestBody } from "./question-answering.details";
 
-import QuestionModel from "../models/Question.model";
-import TextResponseModel from "../models/responses/TextResponse.model";
-import { ID, maybeID } from "../../consts/ids";
-import Logger from "../loggers/Logger";
-import { VALIDATE_USER_ANSWER } from "../loggers/LoggingEvents";
+import { ID, maybeID } from "@/lib/consts/ids";
+import QuestionModel from "@/lib/db/models/Question.model";
+import TextResponseModel from "@/lib/db/models/responses/TextResponse.model";
+import Logger from "@/lib/loggers/Logger";
+import { VALIDATE_USER_ANSWER } from "@/lib/loggers/LoggingEvents";
 
 export default async function answerValidationRoute(
   req: NextApiRequest,

@@ -1,6 +1,6 @@
-import { NextApiResponse, NextApiRequest } from 'next'
-import withErrorHandling from '../../utils/withErrorHandling';
+import withErrorHandling from '@/lib/utils/withErrorHandling';
 import createKnowledgeConnectionRoute from '@/services/study-session/create-knowledge-connection.route';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 /**
  * API handler for CRUD operations on KnowledgeConnections

@@ -1,4 +1,4 @@
-import { IS_DEV_MODE } from "../../consts/globals";
+import { IS_DEV_MODE } from "../consts/globals";
 
 /**
  * General purpose error with a user facing message or an dev facing message.

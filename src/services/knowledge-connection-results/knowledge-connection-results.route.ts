@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { TKnowledgeConnectionResultsRequestBody, TKnowledgeConnectionResultsRequestResponse } from "./knowledge-connection-results.details";
 
-import { maybeID } from "../../consts/ids";
-import { HTTPBadRequest } from "../errors/HTTPErrors";
-import Logger from "../loggers/Logger";
-import { GET_KNOWLEDGE_CONNECTION_RESULTS } from "../loggers/LoggingEvents";
-import KnowledgeConnectionModel from "../models/KnowledgeConnection.model";
+import { maybeID } from "@/lib/consts/ids";
+import KnowledgeConnectionModel from "@/lib/db/models/KnowledgeConnection.model";
+import { HTTPBadRequest } from "@/lib/errors/HTTPErrors";
+import Logger from "@/lib/loggers/Logger";
+import { GET_KNOWLEDGE_CONNECTION_RESULTS } from "@/lib/loggers/LoggingEvents";
 
 export default async function knowledgeConnectionResultsRoute(
   req: NextApiRequest,

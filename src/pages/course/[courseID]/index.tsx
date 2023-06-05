@@ -1,8 +1,8 @@
 /**
  * Page for viewing course content
  */
-import type { TCourseData } from "@/services/models/Course.model";
-import type { TKnowledgeData } from "@/services/models/Knowledge.model";
+import type { TCourseData } from "@/lib/db/models/Course.model";
+import type { TKnowledgeData } from "@/lib/db/models/Knowledge.model";
 import type {
   GetServerSideProps,
   InferGetServerSidePropsType,
@@ -18,8 +18,8 @@ import { DarkModeSwitch } from "@/components/DarkModeSwitch";
 import { Hero } from "@/components/Hero";
 import { Main } from "@/components/Main";
 import KnowledgeCard from "@/components/feed_cards/KnowledgeCard";
-import { HTTPBadRequest } from "@/services/errors/HTTPErrors";
-import CourseModel from "@/services/models/Course.model";
+import CourseModel from "@/lib/db/models/Course.model";
+import { HTTPBadRequest } from "@/lib/errors/HTTPErrors";
 import { useCallback } from "react";
 
 export const getServerSideProps: GetServerSideProps<{

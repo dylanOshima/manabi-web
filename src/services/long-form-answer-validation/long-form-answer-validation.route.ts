@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { sendPromptToOpenAI } from "../openai/openai";
-import answerParser from "../response_handling/longAnswerParser";
+import answerParser from "../openai/response_handling/longAnswerParser";
 import type { longFormAnswerValidationRequestBodyType } from "./long-form-answer-validation.details";
 import { generatePrompt } from "./long-form-answer-validation.utils";
 

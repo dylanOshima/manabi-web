@@ -1,17 +1,17 @@
-import type { ID } from "../../consts/ids";
 import type { ExpChain } from "lodash";
+import type { ID } from "../../consts/ids";
 
 import { isNil } from "lodash";
 
-import { SHOULD_SAVE_MONEY } from "src/consts/globals";
-import Logger from "../loggers/Logger";
-import { sendPromptToOpenAI } from "../openai/openai";
-import { genAnswerFeedbackPrompt } from "../openai/prompt_templates";
+import { SHOULD_SAVE_MONEY } from "@/lib/consts/globals";
+import { db } from "@/lib/db";
+import { TDB } from "@/lib/db/mock-db-data";
+import { sendPromptToOpenAI } from "../../../services/openai/openai";
+import { genAnswerFeedbackPrompt } from "../../../services/openai/prompt_templates";
+import Logger from "../../loggers/Logger";
+import { OPENAI_API_SEND_PROMPT } from "../../loggers/LoggingEvents";
 import ModelBase from "./ModelBase";
 import TextResponseModel from "./responses/TextResponse.model";
-import { OPENAI_API_SEND_PROMPT } from "../loggers/LoggingEvents";
-import { db } from "src/db";
-import { TDB } from "src/db/mock-db-data";
 
 export type TQuestionData = {
   id: ID,

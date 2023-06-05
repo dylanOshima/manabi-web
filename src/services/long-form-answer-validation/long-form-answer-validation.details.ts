@@ -1,4 +1,4 @@
-import { TAnswerValidationParserOutput } from "../response_handling/longAnswerParser";
+import { TAnswerValidationParserOutput } from "../openai/response_handling/longAnswerParser";
 
 export const longFormAnswerValidationUrl = "/api/long-form-answer-validation";
 

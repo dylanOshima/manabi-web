@@ -1,55 +1,66 @@
 /**
  * Page for viewing the courses available
  */
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps } from "next";
 
-import NextLink from 'next/link'
-import { Text, Button, ButtonGroup } from '@chakra-ui/react'
-import { ArrowRightIcon, AtSignIcon } from '@chakra-ui/icons';
+import { ArrowRightIcon, AtSignIcon } from "@chakra-ui/icons";
+import { Button, ButtonGroup, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 
-import { Container } from '@/components/Container';
-import { Main } from '@/components/Main';
-import { DarkModeSwitch } from '@/components/DarkModeSwitch';
-import CourseModel, { TCourseData } from '@/services/models/Course.model';
-import BaseFeedCard from '@/components/feed_cards/BaseFeedCard';
+import { Container } from "@/components/Container";
+import { DarkModeSwitch } from "@/components/DarkModeSwitch";
+import { Main } from "@/components/Main";
+import BaseFeedCard from "@/components/feed_cards/BaseFeedCard";
+import CourseModel, { TCourseData } from "@/lib/db/models/Course.model";
 
 type Props = {
-  courses: Array<TCourseData>,
-}
+  courses: Array<TCourseData>;
+};
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const courseQuery = await CourseModel.queryAll();
   const courses = await courseQuery.value();
   return {
-    props: { courses }
+    props: { courses },
   };
-}
+};
 
 const CoursePage = ({ courses }: Props) => (
-  <Container height="100vh">
+  <Container height='100vh'>
     <Main>
-      {courses.map(course => {
+      {courses.map((course) => {
         const numStudents = course.studentIDs.length;
         return (
           <BaseFeedCard
-            size="lg"
+            size='lg'
             key={course.id}
             header={course.title}
             footer={
               <ButtonGroup spacing='2'>
-                <NextLink href={`/users/`} passHref>
-                  <Button aria-label={'Button to view users'} leftIcon={<AtSignIcon />} disabled>
+                <NextLink
+                  href={`/users/`}
+                  passHref
+                >
+                  <Button
+                    aria-label={"Button to view users"}
+                    leftIcon={<AtSignIcon />}
+                    disabled
+                  >
                     {numStudents} student{numStudents > 1 ? "s" : ""}
                   </Button>
                 </NextLink>
-                <NextLink href={`/course/${course.id}`} passHref>
+                <NextLink
+                  href={`/course/${course.id}`}
+                  passHref
+                >
                   <Button leftIcon={<ArrowRightIcon />}>View Course</Button>
                 </NextLink>
               </ButtonGroup>
-            }>
+            }
+          >
             <Text>{course.description}</Text>
           </BaseFeedCard>
-        )
+        );
       })}
     </Main>
     <DarkModeSwitch />

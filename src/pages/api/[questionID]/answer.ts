@@ -1,6 +1,6 @@
-import { NextApiResponse, NextApiRequest } from 'next'
-import withErrorHandling from 'src/utils/withErrorHandling';
+import withErrorHandling from '@/lib/utils/withErrorHandling';
 import answerValidationRoute from '@/services/question-answering/question-answering.route';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 /**
  * API handler for dealing with answers from ChatGPT.

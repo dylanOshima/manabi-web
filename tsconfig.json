@@ -24,6 +24,9 @@
       ],
       "@/services/*": [
         "src/services/*"
+      ],
+      "@/lib/*": [
+        "src/lib/*"
       ]
     },
     "incremental": true

@@ -1,5 +1,5 @@
-import Logger from "@/services/loggers/Logger";
-import { OPENAI_VALIDATE_GPT_FEEDBACK } from "@/services/loggers/LoggingEvents";
+import Logger from "@/lib/loggers/Logger";
+import { OPENAI_VALIDATE_GPT_FEEDBACK } from "@/lib/loggers/LoggingEvents";
 import type { ID } from "../../../consts/ids";
 import KnowledgeModel from "../Knowledge.model";
 import KnowledgeConnectionModel from "../KnowledgeConnection.model";

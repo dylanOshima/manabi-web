@@ -1,11 +1,11 @@
+import type { TDB } from "@/lib/db/mock-db-data";
 import { ExpChain } from "lodash";
-import type { TDB } from "src/db/mock-db-data";
 import type { ID } from "../../consts/ids";
 
 import { isNil, set } from 'lodash';
 
-import { db } from "src/db";
-import { NoDataFoundError } from "../errors/ModelErrors";
+import { db } from "@/lib/db";
+import { NoDataFoundError } from "../../errors/ModelErrors";
 import ModelBase from "./ModelBase";
 import TextResponseModel from "./responses/TextResponse.model";
 

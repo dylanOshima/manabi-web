@@ -1,5 +1,5 @@
-import { ID } from "src/consts/ids";
-import type TextResponseModel from "../models/responses/TextResponse.model";
+import { ID } from "@/lib/consts/ids";
+import type TextResponseModel from "@/lib/db/models/responses/TextResponse.model";
 
 export const questionAnsweringRouteURI = (questionID: ID) => `/api/${questionID}/answer`;
 

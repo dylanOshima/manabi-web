@@ -1,7 +1,7 @@
 /**
  * Page for viewing the questions for a given piece of knowledge.
  */
-import type { TKnowledgeData } from "@/services/models/Knowledge.model";
+import type { TKnowledgeData } from "@/lib/db/models/Knowledge.model";
 import type { GetServerSideProps } from "next/types";
 
 import { Box, Button, Heading, useColorMode } from "@chakra-ui/react";
@@ -12,9 +12,9 @@ import { Container } from "@/components/Container";
 import { DarkModeSwitch } from "@/components/DarkModeSwitch";
 import { Main } from "@/components/Main";
 import PromptCard from "@/components/feed_cards/PromptCard";
-import { HTTPBadRequest } from "@/services/errors/HTTPErrors";
-import KnowledgeModel from "@/services/models/Knowledge.model";
-import { TQuestionData } from "@/services/models/Question.model";
+import KnowledgeModel from "@/lib/db/models/Knowledge.model";
+import { TQuestionData } from "@/lib/db/models/Question.model";
+import { HTTPBadRequest } from "@/lib/errors/HTTPErrors";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 

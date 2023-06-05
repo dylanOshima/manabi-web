@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { TKnowledgeConnectionRequestBody, TKnowledgeConnectionRequestResponse } from "./create-knowledge-connection.details";
 
-import Logger from "../loggers/Logger";
-import KnowledgeConnectionModel from "../models/KnowledgeConnection.model";
-import { HTTPInternalServerError } from "../errors/HTTPErrors";
+import KnowledgeConnectionModel from "@/lib/db/models/KnowledgeConnection.model";
+import { HTTPInternalServerError } from "@/lib/errors/HTTPErrors";
+import Logger from "@/lib/loggers/Logger";
 
 export default async function createKnowledgeConnectionRoute(
   req: NextApiRequest,

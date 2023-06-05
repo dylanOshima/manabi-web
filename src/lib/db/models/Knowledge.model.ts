@@ -1,13 +1,13 @@
-import type { ID } from "../../consts/ids";
-import type { TDB } from "src/db/mock-db-data";
+import type { TDB } from "@/lib/db/mock-db-data";
 import type { ExpChain } from "lodash";
+import type { ID } from "../../consts/ids";
 import type { TQuestionData } from "./Question.model";
 
-import { isNil, includes } from 'lodash'
-import { db } from "src/db";
+import { db } from "@/lib/db";
+import { includes, isNil } from 'lodash';
+import { NoDataFoundError } from "../../errors/ModelErrors";
 import ModelBase from "./ModelBase";
 import QuestionModel from "./Question.model";
-import { NoDataFoundError } from "../errors/ModelErrors";
 
 export type TKnowledgeData = {
   id: ID,

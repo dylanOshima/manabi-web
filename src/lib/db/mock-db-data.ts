@@ -4,12 +4,12 @@
  * - Refs to other objects are modeled as links to other tags
  */
 
-import { TCourseData } from "@/services/models/Course.model";
-import { TKnowledgeData } from "@/services/models/Knowledge.model";
-import { TKnowledgeConnectionData } from "@/services/models/KnowledgeConnection.model";
-import { TQuestionData } from "@/services/models/Question.model"
-import { TStudentData } from "@/services/models/Student.model";
-import { TResponseData } from "@/services/models/responses/Response.model";
+import { TCourseData } from "@/lib/db/models/Course.model";
+import { TKnowledgeData } from "@/lib/db/models/Knowledge.model";
+import { TKnowledgeConnectionData } from "@/lib/db/models/KnowledgeConnection.model";
+import { TQuestionData } from "@/lib/db/models/Question.model";
+import { TStudentData } from "@/lib/db/models/Student.model";
+import { TResponseData } from "@/lib/db/models/responses/Response.model";
 
 // Mock data for Question.model
 const question: Array<TQuestionData> = [

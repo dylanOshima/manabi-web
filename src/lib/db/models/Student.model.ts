@@ -1,7 +1,7 @@
 import type { ID } from "../../consts/ids";
 
+import { db } from "@/lib/db";
 import ModelBase from "./ModelBase";
-import { db } from "src/db";
 
 export type TStudentData = {
   id: ID,

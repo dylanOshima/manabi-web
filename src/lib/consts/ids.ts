@@ -1,5 +1,4 @@
-import BaseError from "@/services/errors/BaseError";
-import { InvalidInputError } from "@/services/errors/InvalidInputError";
+import { InvalidInputError } from "@/lib/errors/InvalidInputError";
 import { isNil, toNumber } from "lodash";
 
 /**

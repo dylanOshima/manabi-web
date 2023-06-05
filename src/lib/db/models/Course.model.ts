@@ -1,12 +1,12 @@
-import type { ID } from "../../consts/ids";
 import type { ExpChain } from 'lodash';
+import type { ID } from "../../consts/ids";
 import type { TKnowledgeData } from "./Knowledge.model";
 
-import { db } from "src/db";
-import ModelBase from "./ModelBase";
+import { db } from "@/lib/db";
+import { TDB } from "@/lib/db/mock-db-data";
 import { isNil } from "lodash";
-import { TDB } from "src/db/mock-db-data";
 import KnowledgeModel from "./Knowledge.model";
+import ModelBase from "./ModelBase";
 
 export type TCourseData = {
   id: ID,

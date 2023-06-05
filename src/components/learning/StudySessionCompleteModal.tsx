@@ -1,3 +1,4 @@
+import { ID } from "@/lib/consts/ids";
 import { knowledgeConnectionResultsFetch } from "@/services/knowledge-connection-results/knowledge-connection-results.fetch";
 import {
   Box,
@@ -13,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ID } from "src/consts/ids";
 
 type Props = {};
 
