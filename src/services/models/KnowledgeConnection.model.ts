@@ -1,12 +1,13 @@
-import type { ID } from "../../consts/ids";
+import { ExpChain } from "lodash";
 import type { TDB } from "src/db/mock-db-data";
-import type { ExpChain } from "lodash";
+import type { ID } from "../../consts/ids";
 
-import { isNil, set } from 'lodash'
+import { isNil, set } from 'lodash';
 
 import { db } from "src/db";
-import ModelBase from "./ModelBase";
 import { NoDataFoundError } from "../errors/ModelErrors";
+import ModelBase from "./ModelBase";
+import TextResponseModel from "./responses/TextResponse.model";
 
 export type TKnowledgeConnectionData = {
   id: ID,
@@ -62,11 +63,30 @@ export default class KnowledgeConnectionModel extends ModelBase<TKnowledgeConnec
     return db.query.get(KnowledgeConnectionModel.type).omitBy(isNil).values();
   }
 
+  /**
+   * Returns the student's strength on the given piece of knowledge. Where strength indicates
+   * how confident we are that the student understands the Knowledge associated with 
+   * this connection.
+   * 
+   * @docs docs/strength-algorithm-v1.pdf
+   * 
+   * @returns strength
+   */
   public async getStrength(): Promise<number> {
-
-    // 
-
-    return 0;
+    const responses = await Promise.all(
+      this.data.responseIDs.map(
+        async responseID => await TextResponseModel.fetch(responseID)
+      )
+    );
+    const correctness = responses.reduce((strength, response) => {
+      const evaluation = response.data.evaluation;
+      if(evaluation == null) {
+        // Ignore responses that have not been evaluated
+        return strength;
+      }
+      return strength + evaluation.score;
+    }, 0);
+    return correctness / responses.length;
   }
 
 }

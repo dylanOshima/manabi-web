@@ -1,9 +1,9 @@
+import Logger from "@/services/loggers/Logger";
 import { OPENAI_VALIDATE_GPT_FEEDBACK } from "@/services/loggers/LoggingEvents";
 import type { ID } from "../../../consts/ids";
 import KnowledgeModel from "../Knowledge.model";
 import KnowledgeConnectionModel from "../KnowledgeConnection.model";
 import ModelBase from "../ModelBase";
-import Logger from "@/services/loggers/Logger";
 
 export type TResponseData<TInput> = {
   id: ID,
@@ -46,7 +46,7 @@ export default abstract class ResponseModel<TInput> extends ModelBase<TResponseD
       const feedback = JSON.parse(raw) as TResponseEvaluation['feedback'];
       const evaluation = {
         raw,
-        // Heuristic for evaluating how correct a student was. Should be improved.
+        // TODO: Heuristic for evaluating how correct a student was. Should be improved.
         score: feedback.correctPoints.length / (feedback.correctPoints.length + feedback.missedPoints.length),
         feedback,
       };
