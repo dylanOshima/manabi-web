@@ -26,11 +26,9 @@ type Props = {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
-  const { knowledgeID } = params;
+  const knowledgeID = params?.knowledgeID;
   if (typeof knowledgeID !== "string" || isNumber(knowledgeID)) {
-    throw new HTTPBadRequest({
-      debugMessage: `Passed knowledge ID '${knowledgeID}' is invalid`,
-    });
+    throw new HTTPBadRequest(`Passed knowledge ID '${knowledgeID}' is invalid`);
   }
   const knowledgeModel = await KnowledgeModel.fetch(toNumber(knowledgeID));
   const questions = await knowledgeModel.getQuestionData();

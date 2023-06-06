@@ -6,7 +6,10 @@ import BaseError from "./BaseError";
 export class NoDataFoundError extends BaseError {
   constructor({
     debugMessage,
-    extraData = null,
+    extraData,
+  }: {
+    debugMessage: string,
+    extraData?: object
   }) {
     const name = "No Data Found";
     const userMessage = "An internal error has occurred.";
@@ -15,9 +18,9 @@ export class NoDataFoundError extends BaseError {
 
   public serialize() {
     return {
-      name: this.name,
       ...this.extraData,
       ...super.serialize(),
+      name: this.name,
     }
   }
 }

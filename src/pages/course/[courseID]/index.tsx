@@ -26,12 +26,10 @@ export const getServerSideProps: GetServerSideProps<{
   course: TCourseData;
   knowledge: Array<TKnowledgeData>;
 }> = async ({ params }) => {
-  const { courseID: courseIDUntyped } = params;
+  const courseIDUntyped = params?.courseID;
   const courseID = toNumber(courseIDUntyped);
   if (!isFinite(courseID)) {
-    throw new HTTPBadRequest({
-      debugMessage: `Passed course ID '${courseID}' is invalid`,
-    });
+    throw new HTTPBadRequest(`Passed course ID '${courseID}' is invalid`);
   }
   const courseQuery = await CourseModel.queryAll();
   const course = courseQuery.find({ id: toNumber(courseID) }).value();

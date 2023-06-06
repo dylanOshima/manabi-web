@@ -54,7 +54,7 @@ export default abstract class ResponseModel<TInput> extends ModelBase<TResponseD
       return evaluation;
     } catch (err) {
       logger.setAdditionalData({ success: false }).setError(err);
-      throw new err;
+      throw err;
     } finally {
       logger.log();
     }

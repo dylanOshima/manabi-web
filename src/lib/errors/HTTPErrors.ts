@@ -10,23 +10,29 @@ export class HTTPError extends BaseError {
     name,
     statusCode,
     extraData
+  }: {
+    debugMessage?: string | null,
+    userMessage: string,
+    name: string,
+    statusCode: number,
+    extraData?: object | null,
   }) {
-    super(name, userMessage, debugMessage, extraData);
+    super(name, userMessage, debugMessage, extraData ?? undefined);
     this.statusCode = statusCode;
   }
 
   public serialize() {
     return {
-      name: this.name,
-      statusCode: this.statusCode,
       ...this.extraData,
       ...super.serialize(),
+      statusCode: this.statusCode,
+      name: this.name,
     }
   }
 }
 
 export class HTTPBadRequest extends HTTPError {
-  constructor(debugMessage = null, extraData = null) {
+  constructor(debugMessage?: string, extraData?: object) {
     super({
       userMessage: 'Bad request',
       debugMessage,
@@ -38,7 +44,7 @@ export class HTTPBadRequest extends HTTPError {
 }
 
 export class HTTPNotFound extends HTTPError {
-  constructor(debugMessage = null, extraData = null) {
+  constructor(debugMessage?: string, extraData?: object) {
     super({
       userMessage: 'Not Found',
       debugMessage,
@@ -50,7 +56,7 @@ export class HTTPNotFound extends HTTPError {
 }
 
 export class HTTPInternalServerError extends HTTPError {
-  constructor(debugMessage = null, extraData = null) {
+  constructor(debugMessage?: string, extraData?: object) {
     super({
       userMessage: 'Internal server error',
       debugMessage,

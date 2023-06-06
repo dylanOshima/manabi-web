@@ -26,9 +26,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 }) => {
   const knowledgeID = maybeID(query.knowledgeID);
   if (knowledgeID == null) {
-    throw new HTTPBadRequest({
-      debugMessage: `Passed IDs are invalid IDs: '${query}'.`,
-    });
+    throw new HTTPBadRequest(`Passed IDs are invalid IDs: '${query}'.`);
   }
 
   const knowledge = await KnowledgeModel.fetch(knowledgeID);

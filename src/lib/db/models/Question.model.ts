@@ -6,6 +6,7 @@ import { isNil } from "lodash";
 import { SHOULD_SAVE_MONEY } from "@/lib/consts/globals";
 import { db } from "@/lib/db";
 import { TDB } from "@/lib/db/mock-db-data";
+import BaseError from "@/lib/errors/BaseError";
 import { sendPromptToOpenAI } from "../../../services/openai/openai";
 import { genAnswerFeedbackPrompt } from "../../../services/openai/prompt_templates";
 import Logger from "../../loggers/Logger";
@@ -84,7 +85,7 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
       if (!SHOULD_SAVE_MONEY) {
         const resp = await sendPromptToOpenAI(prompt);
         // Get the first response choice
-        feedback = resp.data.choices[0].text;
+        feedback = resp.data.choices[0].text ?? "";
       } else {
         feedback = `{
           "correctPoints": [
@@ -104,7 +105,9 @@ export default class QuestionModel extends ModelBase<TQuestionData> {
       await response.save();
       return response;
     } catch (error) {
-      logger.setError(error);
+      if(error instanceof BaseError) {
+        logger.setError(error);
+      }
       throw error;
     } finally {
       logger.log();

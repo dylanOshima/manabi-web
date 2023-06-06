@@ -6,7 +6,10 @@ import BaseError from "./BaseError";
 export class InvalidInputError extends BaseError {
   constructor({
     debugMessage,
-    extraData = null,
+    extraData,
+  }: {
+    debugMessage?: string,
+    extraData?: object,
   }) {
     const name = "Invalid input passed.";
     const userMessage = "An internal error has occurred.";
@@ -15,9 +18,9 @@ export class InvalidInputError extends BaseError {
 
   public serialize() {
     return {
-      name: this.name,
       ...this.extraData,
       ...super.serialize(),
+      name: this.name,
     }
   }
 }

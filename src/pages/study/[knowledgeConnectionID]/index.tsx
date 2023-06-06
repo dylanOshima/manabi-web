@@ -23,11 +23,11 @@ type Props = {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
-  const knowledgeConnectionID = maybeID(params.knowledgeConnectionID);
+  const knowledgeConnectionID = maybeID(params?.knowledgeConnectionID);
   if (knowledgeConnectionID == null) {
-    throw new HTTPBadRequest({
-      debugMessage: `Passed knowledge connection ID '${knowledgeConnectionID}' is invalid`,
-    });
+    throw new HTTPBadRequest(
+      `Passed knowledge connection ID '${knowledgeConnectionID}' is invalid`,
+    );
   }
   const knowledgeConnection = await KnowledgeConnectionModel.fetch(
     knowledgeConnectionID,

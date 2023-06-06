@@ -11,12 +11,12 @@ export default class BaseError extends Error {
     // Message shown to the user
     protected userMessage: string,
     // Message shown in the dev tier for easier debugging.
-    protected debugMessage?: string,
+    protected debugMessage?: string | null,
     // Misc. data
     protected extraData: object = {},
   ) {
     super(
-      IS_DEV_MODE ? userMessage : debugMessage
+      IS_DEV_MODE ? userMessage : (debugMessage ?? userMessage)
     );
     Error.captureStackTrace(this, BaseError);
   }

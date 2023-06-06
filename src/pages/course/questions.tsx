@@ -45,10 +45,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-export async function getStaticPaths() {
-  return {
-    paths: ["/course/[courseID]/questions"],
-    fallback: true,
-  };
-}

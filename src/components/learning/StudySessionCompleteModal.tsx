@@ -79,7 +79,7 @@ const Results = ({ results = 0.75 }) => {
     defaultValue: 0,
     max: resultsPercentage,
   });
-  const intervalIDRef = useRef<number | null>();
+  const intervalIDRef = useRef<number>();
 
   useEffect(() => {
     if (!isAtMax) {
@@ -100,7 +100,7 @@ const Results = ({ results = 0.75 }) => {
   );
 };
 
-const Error = ({ errorMessage }) => (
+const Error = ({ errorMessage }: { errorMessage: string }) => (
   <Box
     textAlign='center'
     marginBottom={8}

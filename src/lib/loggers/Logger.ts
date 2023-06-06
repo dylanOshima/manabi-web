@@ -5,11 +5,15 @@ import BaseError from "../errors/BaseError";
  */
 export default class Logger {
 
-  protected data;
+  protected data: {
+    errors: any[],
+    event: string,
+  } & object;
 
   constructor({ ...args } = {}) {
     this.data = {
       errors: [],
+      event: "",
       ...args,
     };
   }
@@ -32,8 +36,15 @@ export default class Logger {
     return this;
   }
 
-  public setError(error: BaseError): this {
-    const errorData = error.serialize();
+  public setError(error: unknown | Error): this {
+    let errorData;
+    if (typeof error === "string") {
+      errorData = error;
+    } else if (error instanceof BaseError) {
+      errorData = error.serialize();
+    } else if (error instanceof Error) {
+      errorData = error.message;
+    }
     const existingErrors: Array<object> = this.data.errors ?? [];
     this.data.errors = [
       ...existingErrors,

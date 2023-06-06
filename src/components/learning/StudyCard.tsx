@@ -18,7 +18,13 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ChakraMarkdown from "../ChakraMarkdown";
 import BaseFeedCard from "../feed_cards/BaseFeedCard";
 
@@ -49,7 +55,11 @@ export default function StudyCard({ index, question, onNext }: Props) {
     }
   }, [index]);
 
-  const onChange = useCallback((e) => setResponse(e.target.value), []);
+  const onChange = useCallback(
+    (e: SyntheticEvent<HTMLTextAreaElement>) =>
+      setResponse(e.currentTarget.value),
+    [],
+  );
 
   const { query } = useRouter();
   const knowledgeConnectionID = ID(query.knowledgeConnectionID);
@@ -62,10 +72,12 @@ export default function StudyCard({ index, question, onNext }: Props) {
         studentID: 0,
         answer: response,
       }).then(({ evaluation }) =>
-        setEvaluation({
-          score: evaluation.score,
-          feedback: evaluation.feedback,
-        }),
+        evaluation == null
+          ? null
+          : setEvaluation({
+              score: evaluation.score,
+              feedback: evaluation.feedback,
+            }),
       ),
     [knowledgeConnectionID, questionID, response],
   );
@@ -75,7 +87,7 @@ export default function StudyCard({ index, question, onNext }: Props) {
       <BaseFeedCard
         variant='elevated'
         border='medium'
-        borderColor={response.length > 0 && "green"}
+        borderColor={response.length > 0 ? "green" : "current"}
       >
         <ChakraMarkdown>{questionText}</ChakraMarkdown>
       </BaseFeedCard>

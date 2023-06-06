@@ -1,7 +1,8 @@
+import type { ID } from "@/lib/consts/ids";
 import { TKnowledgeConnectionResultsRequestBody, TKnowledgeConnectionResultsRequestResponse, knowledgeConnectionResultsRouteURI } from "./knowledge-connection-results.details";
 
 export const knowledgeConnectionResultsFetch = async (
-  knowledgeConnectionID,
+  knowledgeConnectionID: ID,
   requestBody: TKnowledgeConnectionResultsRequestBody
 ) => {
   const uri = knowledgeConnectionResultsRouteURI(knowledgeConnectionID);
