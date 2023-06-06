@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { withIronSessionApiRoute } from "iron-session/next";
+
 import AUTH_ROLES from "@/lib/auth/authRoles";
 import getUserFromCredentials from "@/lib/auth/getUserFromCredentials";
 import ironConfig from "@/lib/auth/ironConfig";
 import Logger from "@/lib/loggers/Logger";
 import { LOGIN as LOGIN_EVENT } from "@/lib/loggers/LoggingEvents";
-import { withIronSessionApiRoute } from "iron-session/next";
 import { TLoginRequestBody } from "./login.details";
 
 async function loginRoute(
@@ -17,9 +18,11 @@ async function loginRoute(
   });
   try {
     const { email, password } = req.body as TLoginRequestBody;
-    const student = getUserFromCredentials(email, password);
+    const student = await getUserFromCredentials(email, password);
     if(student == null) {
-      logger.log();
+      logger.setAdditionalData({
+        noStudentFound: true,
+      }).log();
       res.status(200).json({
         ok: false,
         message: "No student was found.",

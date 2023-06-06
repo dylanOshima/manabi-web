@@ -1,6 +1,10 @@
+import type { ExpChain } from "lodash";
 import type { ID } from "../../consts/ids";
 
+import { isNil } from "lodash";
+
 import { db } from "@/lib/db";
+import { TDB } from "../mock-db-data";
 import ModelBase from "./ModelBase";
 
 export type TStudentData = {
@@ -37,5 +41,18 @@ export default class StudentModel extends ModelBase<TStudentData> {
   ): Promise<void> {
     db.data[StudentModel.type].push(this.data);
     await db.write();
+  }
+
+  public static async queryAll(
+  ): Promise<ExpChain<TDB["student"]>> {
+    await db.read();
+    return db.query.get(StudentModel.type).omitBy(isNil).values();
+  }
+
+  public async isCorrectPassword(
+    password: string
+  ): Promise<boolean> {
+    // TODO: Actually do hashing.
+    return password === this.data.passwordHash;
   }
 }

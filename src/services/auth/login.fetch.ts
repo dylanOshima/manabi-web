@@ -1,8 +1,8 @@
+import { HTTPBadRequest } from "@/lib/errors/HTTPErrors";
 import { TLoginRequestBody, TLoginResponse, loginRouteURI } from "./login.details";
 
 export const loginFetch = async (
   requestBody: TLoginRequestBody,
-  onError?: (errorMessage: string) => void,
 ) => {
   const response = await fetch(loginRouteURI, {
     method: "POST",
@@ -13,10 +13,11 @@ export const loginFetch = async (
   const data =
     (await response.json()) as TLoginResponse;
   if (response.status !== 200) {
-    onError && onError(`Request failed with status ${response.status}`);
+    throw new HTTPBadRequest(`Request failed with status ${response.status}`);
   }
+
   if(!data.ok) {
-    onError && onError(data.message);
+    throw new HTTPBadRequest(`Failed to login due to: ${data.message}`);
   }
   return data.ok;
 };
