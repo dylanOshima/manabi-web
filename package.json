@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.10.6",
     "classnames": "^2.3.2",
     "framer-motion": "^10.12.4",
+    "iron-session": "^6.3.1",
     "next": "latest",
     "openai": "^3.2.1",
     "react": "^18.2.0",
