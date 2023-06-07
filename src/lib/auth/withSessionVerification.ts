@@ -8,6 +8,7 @@ import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session/edge";
 import { NextResponse } from "next/server";
 
+import { loginPageURI } from "@/services/auth/login.details";
 import Logger from "../loggers/Logger";
 import { AUTH_MIDDLEWARE_VERIFICATION } from "../loggers/LoggingEvents";
 import AUTH_ROLES from "./authRoles";
@@ -31,9 +32,17 @@ export const withSessionVerification = async (req: NextRequest, res: NextRespons
   if (viewer == null) {
     logger.setAdditionalData({redirectReason: "no viewer found, redirecting to login page."});
     // Re-route to login page
-    return NextResponse.redirect(new URL('/auth/login', req.url));
+    return NextResponse.redirect(new URL(loginPageURI, req.url));
   }
   
-  logger.setAdditionalData({viewer}).log();
+  logger.setAdditionalData({viewer});
+  
+  if (req.nextUrl.pathname.startsWith(loginPageURI)) {
+    logger.setAdditionalData({redirectReason: "Viewer is already logged in."});
+    // Re-route to home page
+    return NextResponse.redirect(new URL('/', req.url));
+  }
+
+  logger.log();
   return res;
 };

@@ -1,6 +1,8 @@
 import { TStudentData } from "@/lib/db/models/Student.model";
 
-export const loginRouteURI = '/api/auth/login';
+export const loginPageURI = "/auth/login";
+
+export const loginRouteURI = '/api/' + loginPageURI;
 
 export type TLoginRequestBody = {
   email: TStudentData['email'],
