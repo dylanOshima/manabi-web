@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 import { Container } from "./Container";
-import { DarkModeSwitch } from "./DarkModeSwitch";
 import { Main } from "./Main";
+import Nav from "./Nav";
 
 type Props = {
   children: ReactNode;
@@ -19,7 +19,7 @@ export default function Page({ children, header, footer }: Props) {
       {header}
       <Main>{children}</Main>
       {footer}
-      <DarkModeSwitch />
+      <Nav />
     </Container>
   );
 }
