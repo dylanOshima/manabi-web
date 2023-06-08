@@ -6,9 +6,7 @@ import type { GetServerSideProps } from "next/types";
 
 import { Heading, Text, useColorMode } from "@chakra-ui/react";
 
-import { Container } from "@/components/Container";
-import { DarkModeSwitch } from "@/components/DarkModeSwitch";
-import { Main } from "@/components/Main";
+import Page from "@/components/Page";
 import PromptCard from "@/components/feed_cards/PromptCard";
 import { maybeID } from "@/lib/consts/ids";
 import KnowledgeModel from "@/lib/db/models/Knowledge.model";
@@ -59,23 +57,20 @@ const StudyPage = ({ knowledgeText, questions = [] }: Props) => {
   const isDark = colorMode === "dark";
 
   return (
-    <Container height='100vh'>
-      <Main>
-        <Heading>Study Session</Heading>
-        <Text
-          textAlign='center'
-          color={`gray.${isDark ? "300" : "600"}`}
-          fontSize='m'
-        >
-          {knowledgeText}
-        </Text>
-        <Heading>Questions</Heading>
-        {questions.map(({ id, text }) => (
-          <PromptCard key={id}>{text}</PromptCard>
-        ))}
-      </Main>
-      <DarkModeSwitch />
-    </Container>
+    <Page>
+      <Heading>Study Session</Heading>
+      <Text
+        textAlign='center'
+        color={`gray.${isDark ? "300" : "600"}`}
+        fontSize='m'
+      >
+        {knowledgeText}
+      </Text>
+      <Heading>Questions</Heading>
+      {questions.map(({ id, text }) => (
+        <PromptCard key={id}>{text}</PromptCard>
+      ))}
+    </Page>
   );
 };
 

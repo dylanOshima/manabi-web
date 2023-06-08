@@ -12,9 +12,7 @@ import {
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 
-import { Container } from "@/components/Container";
-import { DarkModeSwitch } from "@/components/DarkModeSwitch";
-import { Main } from "@/components/Main";
+import Page from "@/components/Page";
 import { withSessionServerSideRendering } from "@/lib/auth/withSession";
 import { loginFetch } from "@/services/auth/login.fetch";
 
@@ -61,48 +59,45 @@ export default function LoginPage() {
   }, [email, password, router]);
 
   return (
-    <Container height='100vh'>
-      <Main>
-        <Box
-          width='lg'
-          borderWidth='1px'
-          borderRadius='lg'
-          p={8}
-          boxShadow='lg'
-          m='auto'
-          mt={20}
-        >
-          <Stack spacing={4}>
-            <FormControl isInvalid={isInvalid}>
-              <FormErrorMessage>{invalidationMessage}</FormErrorMessage>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.currentTarget.value)}
-                placeholder='Enter your email'
-              />
-              <br />
-              <FormLabel>Password</FormLabel>
-              <Input
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.currentTarget.value)}
-                placeholder='Enter your password'
-              />
-            </FormControl>
-            <Button
-              colorScheme='green'
-              size='lg'
-              width='full'
-              onClick={onSubmit}
-            >
-              Sign In
-            </Button>
-          </Stack>
-        </Box>
-      </Main>
-      <DarkModeSwitch />
-    </Container>
+    <Page>
+      <Box
+        width='lg'
+        borderWidth='1px'
+        borderRadius='lg'
+        p={8}
+        boxShadow='lg'
+        m='auto'
+        mt={20}
+      >
+        <Stack spacing={4}>
+          <FormControl isInvalid={isInvalid}>
+            <FormErrorMessage>{invalidationMessage}</FormErrorMessage>
+            <FormLabel>Email</FormLabel>
+            <Input
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
+              placeholder='Enter your email'
+            />
+            <br />
+            <FormLabel>Password</FormLabel>
+            <Input
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
+              placeholder='Enter your password'
+            />
+          </FormControl>
+          <Button
+            colorScheme='green'
+            size='lg'
+            width='full'
+            onClick={onSubmit}
+          >
+            Sign In
+          </Button>
+        </Stack>
+      </Box>
+    </Page>
   );
 }

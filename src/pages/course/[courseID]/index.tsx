@@ -13,10 +13,8 @@ import { isFinite, toNumber } from "lodash";
 import { useRouter } from "next/router";
 
 import ChakraMarkdown from "@/components/ChakraMarkdown";
-import { Container } from "@/components/Container";
-import { DarkModeSwitch } from "@/components/DarkModeSwitch";
 import { Hero } from "@/components/Hero";
-import { Main } from "@/components/Main";
+import Page from "@/components/Page";
 import KnowledgeCard from "@/components/feed_cards/KnowledgeCard";
 import CourseModel from "@/lib/db/models/Course.model";
 import { HTTPBadRequest } from "@/lib/errors/HTTPErrors";
@@ -56,27 +54,27 @@ const CoursePage = ({
   );
 
   return (
-    <Container height='100vh'>
-      <Hero
-        title={title}
-        module={<Text color='text'>{description}</Text>}
-      />
-      <Main>
-        {knowledge.map((k, index) => (
-          <KnowledgeCard
-            key={k.id}
-            header={`Unit ${index + 1}`}
-            footer={
-              <Text color='gray.500'>{`${k.questionIDs.length} questions to study`}</Text>
-            }
-            onClick={onClickFactory(k.id)}
-          >
-            <ChakraMarkdown>{k.text}</ChakraMarkdown>
-          </KnowledgeCard>
-        ))}
-      </Main>
-      <DarkModeSwitch />
-    </Container>
+    <Page
+      header={
+        <Hero
+          title={title}
+          module={<Text color='text'>{description}</Text>}
+        />
+      }
+    >
+      {knowledge.map((k, index) => (
+        <KnowledgeCard
+          key={k.id}
+          header={`Unit ${index + 1}`}
+          footer={
+            <Text color='gray.500'>{`${k.questionIDs.length} questions to study`}</Text>
+          }
+          onClick={onClickFactory(k.id)}
+        >
+          <ChakraMarkdown>{k.text}</ChakraMarkdown>
+        </KnowledgeCard>
+      ))}
+    </Page>
   );
 };
 

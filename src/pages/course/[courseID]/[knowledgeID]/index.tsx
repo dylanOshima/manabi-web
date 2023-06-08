@@ -8,9 +8,7 @@ import { Box, Button, Heading, useColorMode } from "@chakra-ui/react";
 import { isNumber, toNumber } from "lodash";
 
 import ChakraMarkdown from "@/components/ChakraMarkdown";
-import { Container } from "@/components/Container";
-import { DarkModeSwitch } from "@/components/DarkModeSwitch";
-import { Main } from "@/components/Main";
+import Page from "@/components/Page";
 import PromptCard from "@/components/feed_cards/PromptCard";
 import KnowledgeModel from "@/lib/db/models/Knowledge.model";
 import { TQuestionData } from "@/lib/db/models/Question.model";
@@ -58,25 +56,22 @@ const KnowledgePage = ({ knowledge, questions = [] }: Props) => {
   }, [knowledge.id, router]);
 
   return (
-    <Container height='100vh'>
-      <Main>
-        <Heading>Info</Heading>
-        <ChakraMarkdown>{knowledge.text}</ChakraMarkdown>
-        <Heading>Questions</Heading>
-        <Box>
-          <Button
-            bgColor={isDark ? "green.800" : "green.200"}
-            onClick={onClick}
-          >
-            Study!
-          </Button>
-        </Box>
-        {questions.map(({ id, text }) => (
-          <PromptCard key={id}>{text}</PromptCard>
-        ))}
-      </Main>
-      <DarkModeSwitch />
-    </Container>
+    <Page>
+      <Heading>Info</Heading>
+      <ChakraMarkdown>{knowledge.text}</ChakraMarkdown>
+      <Heading>Questions</Heading>
+      <Box>
+        <Button
+          bgColor={isDark ? "green.800" : "green.200"}
+          onClick={onClick}
+        >
+          Study!
+        </Button>
+      </Box>
+      {questions.map(({ id, text }) => (
+        <PromptCard key={id}>{text}</PromptCard>
+      ))}
+    </Page>
   );
 };
 
