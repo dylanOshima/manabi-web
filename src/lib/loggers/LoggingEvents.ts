@@ -18,3 +18,4 @@ export const GET_STUDENT_DATA = "GET_STUDENT_DATA";
 // Auth
 export const AUTH_MIDDLEWARE_VERIFICATION = "AUTH_MIDDLEWARE_VERIFICATION";
 export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";

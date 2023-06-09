@@ -1,4 +1,5 @@
 import { loginPageURI } from "@/services/auth/loginLogout.details";
+import { logoutFetch } from "@/services/auth/logout.fetch";
 import {
   AtSignIcon,
   ChevronDownIcon,
@@ -23,6 +24,10 @@ export default function ProfileMenu(props: Props) {
     (path: string) => () => route.push(path),
     [route],
   );
+
+  const onLogout = useCallback(() => {
+    logoutFetch().then(() => route.reload());
+  }, [route]);
 
   if (student == null) {
     return (
@@ -54,7 +59,8 @@ export default function ProfileMenu(props: Props) {
             <MenuItem onClick={navigateTo("/course")}>Courses</MenuItem>
             <MenuItem
               color='red'
-              fontWeight='bold'>
+              fontWeight='bold'
+              onClick={onLogout}>
               Log Out
             </MenuItem>
           </MenuList>
