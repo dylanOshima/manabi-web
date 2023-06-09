@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { DarkModeSwitch } from "./DarkModeSwitch";
+import ProfileMenu from "./nav/ProfileMenu";
 
 type Props = {};
 
@@ -13,6 +14,7 @@ export default function Nav(props: Props) {
       position='fixed'
       top={4}
       right={4}>
+      <ProfileMenu />
       <DarkModeSwitch />
     </Box>
   );
