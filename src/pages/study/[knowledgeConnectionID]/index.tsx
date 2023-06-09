@@ -3,10 +3,8 @@
  */
 import type { GetServerSideProps } from "next/types";
 
-import { Container } from "@/components/Container";
-import { Main } from "@/components/Main";
+import Page from "@/components/Page";
 import StudySessionCore from "@/components/learning/StudySessionCore";
-import { DarkModeSwitch } from "@/components/nav/DarkModeSwitch";
 import { maybeID } from "@/lib/consts/ids";
 import KnowledgeModel, {
   TKnowledgeData,
@@ -45,12 +43,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
 const StudySessionPage = (props: Props) => {
   return (
-    <Container height='100vh'>
-      <Main>
-        <StudySessionCore {...props} />
-      </Main>
-      <DarkModeSwitch />
-    </Container>
+    <Page>
+      <StudySessionCore {...props} />
+    </Page>
   );
 };
 
