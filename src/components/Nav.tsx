@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { DarkModeSwitch } from "./DarkModeSwitch";
+import { DarkModeSwitch } from "./nav/DarkModeSwitch";
 import ProfileMenu from "./nav/ProfileMenu";
 
 type Props = {};

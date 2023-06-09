@@ -4,9 +4,9 @@
 import type { GetServerSideProps } from "next/types";
 
 import { Container } from "@/components/Container";
-import { DarkModeSwitch } from "@/components/DarkModeSwitch";
 import { Main } from "@/components/Main";
 import StudySessionCore from "@/components/learning/StudySessionCore";
+import { DarkModeSwitch } from "@/components/nav/DarkModeSwitch";
 import { maybeID } from "@/lib/consts/ids";
 import KnowledgeModel, {
   TKnowledgeData,
