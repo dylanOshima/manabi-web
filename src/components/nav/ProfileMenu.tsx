@@ -1,4 +1,4 @@
-import { loginPageURI } from "@/services/auth/login.details";
+import { loginPageURI } from "@/services/auth/loginLogout.details";
 import {
   AtSignIcon,
   ChevronDownIcon,

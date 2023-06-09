@@ -1,6 +1,6 @@
-import withErrorHandling from '@/lib/utils/withErrorHandling';
-import loginRoute from '@/services/auth/login.route';
-import { NextApiRequest, NextApiResponse } from 'next';
+import withErrorHandling from "@/lib/utils/withErrorHandling";
+import loginRoute from "@/services/auth/login.route";
+import { NextApiRequest, NextApiResponse } from "next";
 
 /**
  * API handler for dealing with answers from ChatGPT.

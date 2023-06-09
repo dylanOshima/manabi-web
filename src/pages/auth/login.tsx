@@ -67,8 +67,7 @@ export default function LoginPage() {
         p={8}
         boxShadow='lg'
         m='auto'
-        mt={20}
-      >
+        mt={20}>
         <Stack spacing={4}>
           <FormControl isInvalid={isInvalid}>
             <FormErrorMessage>{invalidationMessage}</FormErrorMessage>
@@ -92,8 +91,7 @@ export default function LoginPage() {
             colorScheme='green'
             size='lg'
             width='full'
-            onClick={onSubmit}
-          >
+            onClick={onSubmit}>
             Sign In
           </Button>
         </Stack>

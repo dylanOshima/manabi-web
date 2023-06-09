@@ -6,7 +6,7 @@
 import type { NextRequest } from "next/server";
 import type { Viewer } from "./Viewer";
 
-import { loginPageURI } from "@/services/auth/login.details";
+import { loginPageURI } from "@/services/auth/loginLogout.details";
 import { getIronSession } from "iron-session/edge";
 import { NextResponse } from "next/server";
 import Logger from "../loggers/Logger";
