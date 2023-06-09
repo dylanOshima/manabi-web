@@ -11,6 +11,6 @@ enum AUTH_ROLES {
   // Admin session.
   // Access to everything: all seeing, all knowing.
   ADMIN,
-};
+}
 
 export default AUTH_ROLES;

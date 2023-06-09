@@ -1,17 +1,18 @@
-import type { IronSessionOptions } from 'iron-session/edge';
+import type { IronSessionOptions } from "iron-session/edge";
 
 import { IS_DEV_MODE } from "../consts/globals";
 import nullOrThrow from "../utils/nullOrThrow";
 
-const COOKIE_NAME = "manabi_auth_cookie";
+export const AUTH_COOKIE_NAME = "manabi_auth_cookie";
+
 const password = nullOrThrow(process.env.COOKIE_PASSWORD);
 
 const ironConfig: IronSessionOptions = {
-    cookieName: COOKIE_NAME,
-    password,
-    cookieOptions: {
-      secure: !IS_DEV_MODE,
-    },
-}
+  cookieName: AUTH_COOKIE_NAME,
+  password,
+  cookieOptions: {
+    secure: !IS_DEV_MODE,
+  },
+};
 
-export default ironConfig
+export default ironConfig;
