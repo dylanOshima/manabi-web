@@ -5,26 +5,33 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.18",
+    "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.5.5",
+    "@chakra-ui/system": "^2.5.8",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "classnames": "^2.3.2",
     "framer-motion": "^10.12.4",
-    "next": "latest",
+    "iron-session": "^6.3.1",
+    "next": "13.4.4",
     "openai": "^3.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.7"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.194",
     "@types/node": "^18.16.0",
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
+    "lodash": "^4.17.21",
+    "lowdb": "^6.0.1",
     "typescript": "5.0.4"
   },
   "packageManager": "yarn@3.5.0"

@@ -1,15 +1,15 @@
-import { Container } from "../components/Container";
-import React, { useState } from "react";
-import {
-  Heading,
-  Textarea,
-  Button,
-  Text,
-  Card,
-  CardHeader,
-  CardBody,
-} from "@chakra-ui/react";
 import { longFormAnswerValidationFetch } from "@/services/long-form-answer-validation/long-form-answer-validation.fetch";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Container } from "../components/Container";
 
 const QUESTIONS_AND_REFERENCE = [
   {
@@ -28,7 +28,7 @@ const LongFormPage = () => {
   async function onSubmit(
     event: React.MouseEvent<HTMLButtonElement>,
     question: string,
-    reference: string
+    reference: string,
   ) {
     setLoading(true);
     event.preventDefault();
@@ -40,42 +40,52 @@ const LongFormPage = () => {
       });
       setResult(validationResult);
     } catch (error) {
-      console.error(error);
-      alert(error.message);
+      if (error instanceof Error) {
+        console.error(error);
+        alert(error.message);
+      }
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <Container height="100vh">
-      <Heading margin="10">Answer Prompts</Heading>
+    <Container height='100vh'>
+      <Heading margin='10'>Answer Prompts</Heading>
       {QUESTIONS_AND_REFERENCE.map(({ question, reference }) => (
         <div key={question}>
-          <Text as="b" display="block" fontSize="md" marginBottom="20px">
+          <Text
+            as='b'
+            display='block'
+            fontSize='md'
+            marginBottom='20px'
+          >
             {question}
           </Text>
           <Textarea
-            display="block"
-            maxWidth="750px"
-            marginBottom="20px"
-            placeholder="Write an answer"
-            resize="vertical"
+            display='block'
+            maxWidth='750px'
+            marginBottom='20px'
+            placeholder='Write an answer'
+            resize='vertical'
             value={studentAnswerInput}
             onChange={(e) => setStudentAnswerInput(e.target.value)}
           />
           <Button
             isLoading={loading}
-            colorScheme="teal"
-            variant="solid"
+            colorScheme='teal'
+            variant='solid'
             onClick={(e) => onSubmit(e, question, reference)}
           >
             Submit Answer
           </Button>
           {!!result && (
-            <Card maxWidth="750px" marginTop="20px">
+            <Card
+              maxWidth='750px'
+              marginTop='20px'
+            >
               <CardHeader>
-                <Heading size="md">Results</Heading>
+                <Heading size='md'>Results</Heading>
               </CardHeader>
               <CardBody>
                 <Text>{result.trim()}</Text>

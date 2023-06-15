@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { sendPromptToOpenAI } from "../openai/openai";
 import type { longFormAnswerValidationRequestBodyType } from "./long-form-answer-validation.details";
+
+import axios from "axios";
+import { sendPromptToOpenAI } from "../openai/openai";
+import answerParser from "../openai/response_handling/longAnswerParser";
 import { generatePrompt } from "./long-form-answer-validation.utils";
 
 export async function longFormAnswerValidationRoute(
@@ -10,13 +13,18 @@ export async function longFormAnswerValidationRoute(
   const body = req.body as longFormAnswerValidationRequestBodyType;
 
   try {
-    const completion = await sendPromptToOpenAI(generatePrompt(body));
-    res.status(200).json({ result: completion.data.choices[0].text });
+    // Prompt generation
+    const prompt = generatePrompt(body);
+    // LLM response
+    const response = await sendPromptToOpenAI(prompt);
+    // Response parser
+    const output = answerParser(response.data.choices[0].text ?? '');
+    res.status(200).json(output);
   } catch (error) {
-    if (error.response) {
-      console.error(error.response.status, error.response.data);
-      res.status(error.response.status).json(error.response.data);
-    } else {
+    if(axios.isAxiosError(error)) {
+      console.error(error?.response?.status, error?.response?.data);
+      res.status(error?.response?.status ?? 500).json(error?.response?.data);
+    } else if (error instanceof Error) {
       console.error(`Error with OpenAI API request: ${error.message}`);
       res.status(500).json({
         error: {

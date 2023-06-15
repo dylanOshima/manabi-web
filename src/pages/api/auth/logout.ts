@@ -1,0 +1,16 @@
+import withErrorHandling from "@/lib/utils/withErrorHandling";
+import logoutRoute from "@/services/auth/logout.route";
+import { NextApiRequest, NextApiResponse } from "next";
+
+/**
+ * API handler for dealing with answers from ChatGPT.
+ */
+function handler(req: NextApiRequest, res: NextApiResponse) {
+  switch (req.method) {
+    case "POST":
+      logoutRoute(req, res);
+      break;
+  }
+}
+
+export default withErrorHandling(handler);

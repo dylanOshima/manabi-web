@@ -1,11 +1,16 @@
-import { Card, CardBody, CardFooter, CardFooterProps, CardHeader, Heading, Text } from '@chakra-ui/react'
+import { CardProps } from '@chakra-ui/react'
+import { Card, CardBody, CardFooter, Heading, Text } from '@chakra-ui/react'
 import * as React from 'react';
 
-type Props = {
-  header?: string,
-  footer?: string,
-  children: React.ReactNode,
+const styles = {
+  hover: { shadow: 'lg', border: '2px solid pink' },
 }
+
+export type Props = {
+  header?: string,
+  footer?: React.ReactNode,
+  children: React.ReactNode,
+} & CardProps
 
 /**
  * A standard card in the main feed. This is the base card that other cards build on top of.
@@ -13,11 +18,16 @@ type Props = {
 export default function BaseFeedCard({
   header,
   footer,
-  children: body
+  children: body,
+  onClick,
+  ...props
 }: Props) {
-
   return (
-    <Card variant="outline">
+    <Card
+      variant="outline"
+      onClick={onClick}
+      _hover={onClick && styles.hover}
+      {...props}>
       <CardBody>
         {header && (
           <Heading size='md'>

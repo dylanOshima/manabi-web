@@ -1,27 +1,34 @@
-import { Text } from '@chakra-ui/react'
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import UserInput from '../components/UserInput'
-import Feed from '../components/Feed'
+import Page from "@/components/Page";
+import ModulesWidget from "@/components/widgets/ModulesWidget";
+import StudySessionsWidget from "@/components/widgets/StudySessionsWidget";
+import { Button, Flex } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 const Index = () => (
-  <Container height="100vh">
-    <Hero
-      title="Market Failure"
-      module={
-        <Text color="text">
-          Economics
-        </Text>
-      }
-    />
-    <Main>
-      <Feed />
-    </Main>
-    <DarkModeSwitch />
-    <UserInput />
-  </Container>
-)
+  <Page>
+    <Flex direction='row'>
+      <NextLink
+        href={`/course`}
+        passHref>
+        <Button
+          aria-label={"Button to view courses"}
+          mr={2}>
+          Courses Page
+        </Button>
+      </NextLink>
+      <NextLink
+        href={`/study`}
+        passHref>
+        <Button
+          aria-label={"Button to start a study session"}
+          mr={2}>
+          Study Page
+        </Button>
+      </NextLink>
+    </Flex>
+    <ModulesWidget />
+    <StudySessionsWidget />
+  </Page>
+);
 
-export default Index
+export default Index;
