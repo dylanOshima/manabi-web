@@ -2,6 +2,9 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "search.exclude": {
     "**/.next": true,
-    "**/.yarn": true
+    "**/.yarn": true,
+    "**/*.excalidraw": true,
+    "**/tsconfig.tsbuildinfo": true,
+    "**/yarn.lock": true
   }
 }
