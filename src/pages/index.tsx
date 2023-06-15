@@ -1,5 +1,6 @@
 import Page from "@/components/Page";
 import ModulesWidget from "@/components/widgets/ModulesWidget";
+import StudySessionsWidget from "@/components/widgets/StudySessionsWidget";
 import { Button, Flex } from "@chakra-ui/react";
 import NextLink from "next/link";
 
@@ -26,6 +27,7 @@ const Index = () => (
       </NextLink>
     </Flex>
     <ModulesWidget />
+    <StudySessionsWidget />
   </Page>
 );
 
